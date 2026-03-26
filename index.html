@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Tourism</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Hero section -->
+  <div class="pin-spacer pin-spacer--hero">
+    <section class="hero pinned-page">
+      <div class="hero-content">
+        <h1 class="hero-title">Dark Tourism, through time</h1>
+        <p class="scroll-cta">SCROLL TO DISCOVER</p>
+        <div class="scroll-arrow">&#8595;</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Pinned intro sections -->
+  <div class="pin-spacer pin-spacer--intro">
+    <section class="intro-step pinned-page" data-bg="Images/Pompei/8gcnjUguaTT8PcK2hrtBWe.jpg">
+      <div class="step-content">
+        <h2>Is it visiting Pompeii?</h2>
+        <p>Walking through an ancient city frozen in time by volcanic ash.</p>
+      </div>
+      <div class="reveal-images">
+        <div class="reveal-img reveal-xl" style="background-image:url('Images/Pompei/pompei_1.webp')"></div>
+        <div class="reveal-img reveal-sm" style="background-image:url('Images/Pompei/pompei_2.jpg')"></div>
+        <div class="reveal-img reveal-md" style="background-image:url('Images/Pompei/pompei_3.webp')"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="pin-spacer pin-spacer--intro">
+    <section class="intro-step pinned-page" data-bg="Images/Chernobyl/191003122049-01-chernobyl-control-room-0925-restricted.jpg">
+      <div class="step-content">
+        <h2>Is it exploring Chernobyl?</h2>
+        <p>A ghost town frozen in the aftermath of nuclear disaster.</p>
+      </div>
+      <div class="reveal-images">
+        <div class="reveal-img reveal-md" style="background-image:url('Images/Chernobyl/chernobyl_1.jpg')"></div>
+        <div class="reveal-img reveal-xl" style="background-image:url('Images/Chernobyl/chernobyl_2.jpg')"></div>
+        <div class="reveal-img reveal-sm" style="background-image:url('Images/Chernobyl/chernobyl_3.avif')"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="pin-spacer pin-spacer--intro">
+    <section class="intro-step pinned-page" data-bg="Images/Human_Safari/ab3f1569c6783c3a99b2086ddf561994.jpg">
+      <div class="step-content">
+        <h2>Is it a Human Safari in Sarajevo?</h2>
+        <p>Guided tours through war-scarred neighbourhoods, where tragedy becomes a spectacle.</p>
+      </div>
+      <div class="reveal-images">
+        <div class="reveal-img reveal-sm" style="background-image:url('Images/Human_Safari/sarajevo_1.jpg')"></div>
+        <div class="reveal-img reveal-md" style="background-image:url('Images/Human_Safari/sarajevo_2.jpg')"></div>
+        <div class="reveal-img reveal-xl" style="background-image:url('Images/Human_Safari/sarajevo_3.jpg')"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="pin-spacer pin-spacer--transition">
+    <section class="intro-step last-step pinned-page">
+      <div class="step-content">
+        <h2>It is all of this, and more.</h2>
+        <p>Let's explore the data behind this phenomenon.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Map section -->
+  <div class="pin-spacer pin-spacer--page">
+    <section id="map-section" class="pinned-page">
+      <div id="map-container">
+        <svg id="map"></svg>
+        <button id="back-btn" class="hidden">&#8592; Back to world view</button>
+        <div id="info-panel" class="hidden">
+          <h3 id="info-title"></h3>
+          <p id="info-text"></p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Timeline map section -->
+  <div class="pin-spacer pin-spacer--page">
+    <section id="timeline-section" class="pinned-page">
+      <h2 class="timeline-title">Visits over the years</h2>
+      <p class="timeline-subtitle">Move the slider to see how visitor numbers evolved from 2016 to 2026.</p>
+      <div id="timeline-container">
+        <svg id="timeline-map"></svg>
+        <div id="timeline-tooltip" class="hidden"></div>
+      </div>
+      <div id="slider-wrapper">
+        <span id="slider-year-label">2016</span>
+        <input type="range" id="year-slider" min="2016" max="2026" value="2016" step="1">
+        <div id="slider-ticks"></div>
+      </div>
+      <div id="visits-list"></div>
+    </section>
+  </div>
+
+  <!-- Vote section -->
+  <div class="pin-spacer pin-spacer--page">
+    <section id="vote-section" class="pinned-page">
+      <h2 class="vote-title">How dark is it?</h2>
+      <p class="vote-subtitle">Drag each place onto the scale, then submit your vote.</p>
+      <div id="vote-container">
+        <svg id="vote-svg"></svg>
+      </div>
+      <button id="submit-btn">Soumettre</button>
+      <div id="vote-results" class="hidden"></div>
+    </section>
+  </div>
+
+  <!-- Comparison section -->
+  <section id="compare-section" class="hidden">
+    <h2 class="compare-title">You vs. the public</h2>
+    <p class="compare-subtitle">See how your perception compares to the average vote.</p>
+    <div id="compare-container">
+      <svg id="compare-svg"></svg>
+    </div>
+    <div id="compare-legend">
+      <span class="legend-item"><span class="legend-dot legend-user"></span> Your vote</span>
+      <span class="legend-item"><span class="legend-dot legend-public"></span> Public average</span>
+    </div>
+  </section>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <script src="main.js"></script>
+  <script src="map.js"></script>
+  <script src="timeline.js"></script>
+  <script src="vote.js"></script>
+  <script src="compare.js"></script>
+</body>
+</html>

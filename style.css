@@ -1,0 +1,855 @@
+/* Reset & base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0a0a0a;
+  color: #f0f0f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Hero section ── */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 70%);
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  color: #e0e0e0;
+}
+
+.scroll-cta {
+  font-size: 0.85rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+.scroll-arrow {
+  font-size: 1.5rem;
+  color: #888;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* ── Pinned page: any section that sticks during scroll ── */
+.pin-spacer {
+  position: relative;
+}
+
+.pin-spacer--hero {
+  height: 250vh;
+}
+
+.pin-spacer--intro {
+  height: 600vh;
+}
+
+.pin-spacer--transition {
+  height: 300vh;
+}
+
+.pin-spacer--page {
+  height: 300vh;
+}
+
+.pinned-page {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Intro step sections ── */
+.intro-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+}
+
+/* Background image layer */
+.intro-step::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  z-index: 0;
+}
+
+/* Dark overlay on top of the image */
+.intro-step::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.85) 0%,
+    rgba(10, 10, 10, 0.4) 40%,
+    rgba(10, 10, 10, 0.4) 60%,
+    rgba(10, 10, 10, 0.85) 100%
+  );
+  z-index: 1;
+}
+
+/* Text content — starts hidden, revealed by scroll progress */
+.step-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  max-width: 700px;
+  padding: 2.5rem 3rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 4px;
+}
+
+.step-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.step-content h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-bottom: 1rem;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+}
+
+.step-content p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.7;
+  color: #ddd;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* ── Reveal images: appear sequentially while section is pinned ── */
+.reveal-images {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.reveal-img {
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: none; /* controlled by JS */
+  border: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Positions: each image in a different corner/zone */
+.reveal-img:nth-child(1) {
+  top: 6vh;
+  right: 4vw;
+}
+
+.reveal-img:nth-child(2) {
+  bottom: 8vh;
+  left: 4vw;
+}
+
+.reveal-img:nth-child(3) {
+  bottom: 12vh;
+  right: 10vw;
+}
+
+/* Size variants — big contrast, smallest = 1/4 screen minimum */
+.reveal-xl {
+  width: 50vw;
+  height: 60vh;
+}
+
+.reveal-md {
+  width: 35vw;
+  height: 40vh;
+}
+
+.reveal-sm {
+  width: 25vw;
+  height: 25vh;
+}
+
+/* ── Scroll progress bar (subtle indicator) ── */
+.pin-progress {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 4;
+  overflow: hidden;
+}
+
+.pin-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* ── Last step special styling ── */
+.last-step {
+  background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 70%);
+}
+
+.last-step h2 {
+  font-size: 2.8rem;
+  font-weight: 400;
+}
+
+/* ── Map section ── */
+#map-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  padding: 2rem 0;
+}
+
+#map-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#map {
+  width: 100%;
+  height: 80vh;
+  display: block;
+}
+
+#map .country {
+  fill: #1e1e1e;
+  stroke: #333;
+  stroke-width: 0.5;
+  cursor: pointer;
+  transition: fill 0.2s;
+}
+
+#map .country:hover {
+  fill: #2a2a2a;
+}
+
+#map .ocean {
+  fill: #0a0a0a;
+  cursor: pointer;
+}
+
+#map .marker {
+  cursor: pointer;
+  transition: r 0.2s;
+}
+
+#map .marker:hover {
+  r: 8;
+}
+
+#map .marker-label {
+  font-size: 11px;
+  fill: #ccc;
+  pointer-events: none;
+  text-anchor: middle;
+}
+
+/* Back button */
+#back-btn {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: rgba(30, 30, 30, 0.9);
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.4s ease, background 0.2s;
+}
+
+#back-btn:hover {
+  background: rgba(60, 60, 60, 0.9);
+}
+
+#back-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Info panel */
+#info-panel {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 320px;
+  background: rgba(15, 15, 15, 0.95);
+  border: 1px solid #333;
+  padding: 1.5rem;
+  z-index: 10;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#info-panel.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
+#info-panel h3 {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.03em;
+}
+
+#info-panel p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #bbb;
+}
+
+/* ── Timeline map section ── */
+#timeline-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #0d0d0d;
+  padding: 3rem 2rem;
+}
+
+.timeline-title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: #e0e0e0;
+  margin-bottom: 0.6rem;
+}
+
+.timeline-subtitle {
+  font-size: 0.95rem;
+  color: #777;
+  letter-spacing: 0.03em;
+  margin-bottom: 2rem;
+}
+
+#timeline-container {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+}
+
+#timeline-map {
+  width: 100%;
+  display: block;
+}
+
+#timeline-map .tl-country {
+  fill: #1a1a1a;
+  stroke: #2a2a2a;
+  stroke-width: 0.5;
+}
+
+#timeline-map .tl-ocean {
+  fill: #0d0d0d;
+}
+
+#timeline-map .tl-bubble {
+  cursor: pointer;
+  stroke-width: 1.5;
+  opacity: 0.85;
+}
+
+#timeline-map .tl-bubble:hover {
+  opacity: 1;
+}
+
+#timeline-map .tl-label {
+  font-size: 10px;
+  fill: #bbb;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+/* Tooltip */
+#timeline-tooltip {
+  position: absolute;
+  background: rgba(10, 10, 10, 0.95);
+  border: 1px solid #444;
+  padding: 0.8rem 1rem;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+#timeline-tooltip.hidden {
+  opacity: 0;
+}
+
+#timeline-tooltip .tt-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+
+#timeline-tooltip .tt-visits {
+  font-size: 0.85rem;
+  color: #ccc;
+}
+
+/* Slider wrapper */
+#slider-wrapper {
+  width: 100%;
+  max-width: 700px;
+  margin-top: 2rem;
+  text-align: center;
+  position: relative;
+}
+
+#slider-year-label {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #fff;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+#year-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(to right, #333, #555);
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #444;
+}
+
+#year-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #c0392b;
+  border: 3px solid #e74c3c;
+  cursor: grab;
+  box-shadow: 0 0 8px rgba(231, 76, 60, 0.5);
+}
+
+#year-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #c0392b;
+  border: 3px solid #e74c3c;
+  cursor: grab;
+  box-shadow: 0 0 8px rgba(231, 76, 60, 0.5);
+}
+
+#slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.6rem;
+  padding: 0 8px;
+}
+
+#slider-ticks span {
+  font-size: 0.75rem;
+  color: #888;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Visits list at the bottom */
+#visits-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem 2rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 900px;
+}
+
+.visit-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.visit-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.visit-name {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.visit-count {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Vote section ── */
+#vote-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  padding: 4rem 2rem;
+}
+
+.vote-title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: #e0e0e0;
+  margin-bottom: 0.6rem;
+}
+
+.vote-subtitle {
+  font-size: 0.95rem;
+  color: #777;
+  letter-spacing: 0.03em;
+  margin-bottom: 2.5rem;
+}
+
+#vote-container {
+  width: 100%;
+  max-width: 900px;
+}
+
+#vote-svg {
+  width: 100%;
+  display: block;
+  overflow: visible;
+}
+
+#vote-svg .axis-line {
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+#vote-svg .tick-line {
+  stroke: #555;
+  stroke-width: 1;
+}
+
+#vote-svg .tick-label {
+  fill: #888;
+  font-size: 12px;
+  text-anchor: middle;
+}
+
+#vote-svg .axis-label-left,
+#vote-svg .axis-label-right {
+  fill: #aaa;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#vote-svg .axis-label-left {
+  text-anchor: start;
+}
+
+#vote-svg .axis-label-right {
+  text-anchor: end;
+}
+
+#vote-svg .place-circle {
+  cursor: grab;
+  stroke-width: 2;
+  transition: filter 0.2s;
+}
+
+#vote-svg .place-circle:hover {
+  filter: brightness(1.3);
+}
+
+#vote-svg .place-circle.dragging {
+  cursor: grabbing;
+  filter: brightness(1.4) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+#vote-svg .place-label {
+  fill: #ccc;
+  font-size: 11px;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+#vote-svg .place-score {
+  fill: #666;
+  font-size: 10px;
+  text-anchor: middle;
+  pointer-events: none;
+  opacity: 0;
+}
+
+#vote-svg .place-score.visible {
+  opacity: 1;
+}
+
+#submit-btn {
+  margin-top: 2.5rem;
+  background: transparent;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  padding: 0.8rem 2.5rem;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+#submit-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #999;
+}
+
+#vote-results {
+  margin-top: 2rem;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid #333;
+  max-width: 500px;
+  width: 100%;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+#vote-results.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#vote-results h4 {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #ccc;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+#vote-results .result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+#vote-results .result-row:last-child {
+  border-bottom: none;
+}
+
+#vote-results .result-name {
+  color: #bbb;
+  font-size: 0.9rem;
+}
+
+#vote-results .result-score {
+  color: #e0e0e0;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* ── Comparison section ── */
+#compare-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #0d0d0d;
+  padding: 4rem 2rem;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+#compare-section.hidden {
+  opacity: 0;
+  pointer-events: none;
+  max-height: 0;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.compare-title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: #e0e0e0;
+  margin-bottom: 0.6rem;
+}
+
+.compare-subtitle {
+  font-size: 0.95rem;
+  color: #777;
+  letter-spacing: 0.03em;
+  margin-bottom: 2.5rem;
+}
+
+#compare-container {
+  width: 100%;
+  max-width: 900px;
+}
+
+#compare-svg {
+  width: 100%;
+  display: block;
+  overflow: visible;
+}
+
+#compare-svg .comp-row-line {
+  stroke: #1a1a1a;
+  stroke-width: 1;
+}
+
+#compare-svg .comp-place-name {
+  fill: #999;
+  font-size: 11px;
+  text-anchor: end;
+}
+
+#compare-svg .comp-score-label {
+  font-size: 10px;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+#compare-svg .comp-user-score {
+  fill: #aaa;
+}
+
+#compare-svg .comp-public-score {
+  fill: #fff;
+}
+
+#compare-svg .comp-connector {
+  stroke: #444;
+  stroke-width: 1;
+  stroke-dasharray: 4,3;
+}
+
+/* Legend */
+#compare-legend {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.legend-user {
+  background: #e67e22;
+}
+
+.legend-public {
+  background: none;
+  border: 2px dashed #fff;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+  }
+
+  .step-content h2 {
+    font-size: 1.6rem;
+  }
+
+  .step-content p {
+    font-size: 1rem;
+  }
+
+  /* Resize reveal images for mobile — smallest still 1/4 screen */
+  .reveal-xl {
+    width: 70vw;
+    height: 45vh;
+  }
+
+  .reveal-md {
+    width: 50vw;
+    height: 30vh;
+  }
+
+  .reveal-sm {
+    width: 40vw;
+    height: 25vh;
+  }
+
+  .step-content h2 {
+    font-size: 1.8rem;
+  }
+}
