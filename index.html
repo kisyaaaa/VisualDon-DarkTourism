@@ -74,6 +74,10 @@
   <!-- Map section -->
   <div class="pin-spacer pin-spacer--page">
     <section id="map-section" class="pinned-page">
+      <div id="map-header">
+        <h2 class="map-title">Explore the sites</h2>
+        <p class="map-subtitle">Click on a point to discover the story behind each location.</p>
+      </div>
       <div id="map-container">
         <svg id="map"></svg>
         <button id="back-btn" class="hidden">&#8592; Back to world view</button>
@@ -85,11 +89,39 @@
     </section>
   </div>
 
-  <!-- Timeline map section -->
+  <!-- Vote section -->
   <div class="pin-spacer pin-spacer--page">
-    <section id="timeline-section" class="pinned-page">
-      <h2 class="timeline-title">Visits over the years</h2>
-      <p class="timeline-subtitle">Move the slider to see how visitor numbers evolved from 2016 to 2026.</p>
+    <section id="vote-section" class="pinned-page">
+      <h2 class="vote-title">How dark is it?</h2>
+      <p class="vote-subtitle">Drag each place onto the scale, then submit your vote.</p>
+      <div id="vote-container">
+        <svg id="vote-svg"></svg>
+      </div>
+      <button id="submit-btn">Submit</button>
+      <p id="submit-confirmation" class="hidden"></p>
+    </section>
+  </div>
+
+  <!-- Comparison section (sticky) -->
+  <div id="compare-spacer" class="pin-spacer pin-spacer--page hidden">
+    <section id="compare-section" class="pinned-page">
+      <h2 class="compare-title">You vs. the public</h2>
+      <p class="compare-subtitle">See how your perception compares to the average vote.</p>
+      <div id="compare-container">
+        <svg id="compare-svg"></svg>
+      </div>
+      <div id="compare-legend">
+        <span class="legend-item"><span class="legend-dot legend-user"></span> Your vote</span>
+        <span class="legend-item"><span class="legend-dot legend-public"></span> Public average</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- Timeline + Visits (combined, end of page) -->
+  <section id="visits-section">
+    <div id="visits-top">
+      <h2 class="visits-title">Visits over the years</h2>
+      <p class="visits-subtitle">Move the slider to see how visitor numbers evolved from 2016 to 2026.</p>
       <div id="timeline-container">
         <svg id="timeline-map"></svg>
         <div id="timeline-tooltip" class="hidden"></div>
@@ -99,34 +131,8 @@
         <input type="range" id="year-slider" min="2016" max="2026" value="2016" step="1">
         <div id="slider-ticks"></div>
       </div>
-      <div id="visits-list"></div>
-    </section>
-  </div>
-
-  <!-- Vote section -->
-  <div class="pin-spacer pin-spacer--page">
-    <section id="vote-section" class="pinned-page">
-      <h2 class="vote-title">How dark is it?</h2>
-      <p class="vote-subtitle">Drag each place onto the scale, then submit your vote.</p>
-      <div id="vote-container">
-        <svg id="vote-svg"></svg>
-      </div>
-      <button id="submit-btn">Soumettre</button>
-      <div id="vote-results" class="hidden"></div>
-    </section>
-  </div>
-
-  <!-- Comparison section -->
-  <section id="compare-section" class="hidden">
-    <h2 class="compare-title">You vs. the public</h2>
-    <p class="compare-subtitle">See how your perception compares to the average vote.</p>
-    <div id="compare-container">
-      <svg id="compare-svg"></svg>
     </div>
-    <div id="compare-legend">
-      <span class="legend-item"><span class="legend-dot legend-user"></span> Your vote</span>
-      <span class="legend-item"><span class="legend-dot legend-public"></span> Public average</span>
-    </div>
+    <div id="visits-list"></div>
   </section>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>

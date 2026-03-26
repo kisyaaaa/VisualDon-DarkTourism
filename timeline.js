@@ -91,8 +91,8 @@ const sitesData = [
 
 // ── Dimensions ──
 const tlContainer = document.getElementById("timeline-container");
-const tlWidth = 1100;
-const tlHeight = 550;
+const tlWidth = 900;
+const tlHeight = 420;
 
 const tlSvg = d3.select("#timeline-map")
   .attr("viewBox", `0 0 ${tlWidth} ${tlHeight}`);

@@ -147,36 +147,22 @@ placeGroups.call(drag);
 let userHasSubmitted = false;
 
 document.getElementById("submit-btn").addEventListener("click", () => {
-  const resultsDiv = document.getElementById("vote-results");
-
-  const results = places.map(d => ({
-    name: d.name,
-    score: d.placed ? +xScale.invert(d.x).toFixed(1) : null
-  }));
-
-  const allPlaced = results.every(r => r.score !== null);
+  const allPlaced = places.every(d => d.placed);
 
   if (!allPlaced) {
-    resultsDiv.innerHTML = `<h4>Please drag all places onto the scale before submitting.</h4>`;
-    resultsDiv.classList.remove("hidden");
+    alert("Please drag all places onto the scale before submitting.");
     return;
   }
 
-  results.sort((a, b) => b.score - a.score);
-
-  const rows = results.map(r =>
-    `<div class="result-row">
-      <span class="result-name">${r.name}</span>
-      <span class="result-score">${r.score} / 5</span>
-    </div>`
-  ).join("");
-
-  resultsDiv.innerHTML = `<h4>Your votes</h4>${rows}`;
-  resultsDiv.classList.remove("hidden");
-
-  console.log("Vote results:", results);
-
-  // Reveal the comparison section
+  // Confirm submission and reveal comparison
   userHasSubmitted = true;
-  document.getElementById("compare-section").classList.remove("hidden");
+  const submitBtn = document.getElementById("submit-btn");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitted!";
+
+  const confirmation = document.getElementById("submit-confirmation");
+  confirmation.textContent = "Thanks! Scroll down to see how others perceive these places.";
+  confirmation.classList.remove("hidden");
+
+  document.getElementById("compare-spacer").classList.remove("hidden");
 });
