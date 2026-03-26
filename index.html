@@ -8,6 +8,14 @@
 </head>
 <body>
 
+  <!-- Preloader -->
+  <div id="preloader">
+    <canvas id="noise-canvas"></canvas>
+    <div id="preloader-content">
+      <span id="preloader-percent">0%</span>
+    </div>
+  </div>
+
   <!-- Hero section -->
   <div class="pin-spacer pin-spacer--hero">
     <section class="hero pinned-page">
@@ -136,6 +144,7 @@
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <script src="preloader.js"></script>
   <script src="main.js"></script>
   <script src="map.js"></script>
   <script src="timeline.js"></script>
