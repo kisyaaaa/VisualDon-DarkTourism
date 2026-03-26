@@ -1,5 +1,17 @@
-// ── Dark Tourism locations data ──
+// ══════════════════════════════════════════════════
+//  Scrollytelling map — Dark Tourism locations
+// ══════════════════════════════════════════════════
+
+// ── Locations ordered for maximum travel distance ──
+// Pompeii (Italy) → Fukushima (Japan) → Chernobyl (Ukraine) → Catacombes de Paris (France)
 const locations = [
+  {
+    name: "Pompeii",
+    coords: [14.4858, 40.7509],
+    color: "#e67e22",
+    description:
+      "In 79 AD, Mount Vesuvius erupted and buried the Roman city of Pompeii under metres of volcanic ash. Rediscovered in the 18th century, the site offers an extraordinarily preserved snapshot of daily life in antiquity — complete with plaster casts of the victims' final moments."
+  },
   {
     name: "Fukushima",
     coords: [141.0325, 37.4211],
@@ -20,46 +32,47 @@ const locations = [
     color: "#9b59b6",
     description:
       "Beneath the streets of Paris lie the remains of over six million people, transferred from overflowing cemeteries in the late 18th century. The ossuary stretches for kilometres through former limestone quarries — a subterranean city of the dead at the heart of the City of Light."
-  },
-  {
-    name: "Pompeii",
-    coords: [14.4858, 40.7509],
-    color: "#e67e22",
-    description:
-      "In 79 AD, Mount Vesuvius erupted and buried the Roman city of Pompeii under metres of volcanic ash. Rediscovered in the 18th century, the site offers an extraordinarily preserved snapshot of daily life in antiquity — complete with plaster casts of the victims' final moments."
   }
 ];
 
 // ── Map setup ──
 const mapSvg = d3.select("#map");
 const mapContainer = document.getElementById("map-container");
+const mapSpacer = document.querySelector(".pin-spacer--map");
 const infoPanel = document.getElementById("info-panel");
 const infoTitle = document.getElementById("info-title");
 const infoText = document.getElementById("info-text");
-const backBtn = document.getElementById("back-btn");
+const mapHeader = document.getElementById("map-header");
 
-const width = mapContainer.clientWidth;
-const height = mapContainer.clientHeight || window.innerHeight * 0.8;
+const mapW = 1200;
+const mapH = window.innerHeight * 0.75;
 
-mapSvg.attr("viewBox", `0 0 ${width} ${height}`);
+mapSvg.attr("viewBox", `0 0 ${mapW} ${mapH}`);
 
 const projection = d3.geoNaturalEarth1()
-  .scale(width / 5.5)
-  .translate([width / 2, height / 2]);
+  .scale(mapW / 5.5)
+  .translate([mapW / 2, mapH / 2]);
 
 const path = d3.geoPath().projection(projection);
 
-// Group that will be transformed for zoom
 const g = mapSvg.append("g");
 
-// Ocean background (click to reset)
+// Ocean background
 g.append("rect")
   .attr("class", "ocean")
-  .attr("width", width * 3)
-  .attr("height", height * 3)
-  .attr("x", -width)
-  .attr("y", -height)
-  .on("click", resetZoom);
+  .attr("width", mapW * 3)
+  .attr("height", mapH * 3)
+  .attr("x", -mapW)
+  .attr("y", -mapH);
+
+// ── Scroll zones ──
+// 5 zones: world overview + 4 locations
+// Each zone = ~1/5 of total scroll
+const totalSteps = locations.length + 1; // 1 overview + 4 locations
+const zoomScale = 5;
+
+// Track current state to avoid re-rendering
+let currentStep = -1;
 
 // ── Load world data and draw ──
 const worldUrl =
@@ -68,78 +81,129 @@ const worldUrl =
 d3.json(worldUrl).then(world => {
   const countries = topojson.feature(world, world.objects.countries);
 
-  // Draw countries
   g.selectAll(".country")
     .data(countries.features)
     .join("path")
     .attr("class", "country")
-    .attr("d", path)
-    .on("click", resetZoom);
+    .attr("d", path);
 
   // Draw markers
-  const markers = g.selectAll(".marker")
+  const markerGroups = g.selectAll(".marker-group")
     .data(locations)
-    .join("circle")
+    .join("g")
+    .attr("class", "marker-group")
+    .attr("transform", d => {
+      const [x, y] = projection(d.coords);
+      return `translate(${x},${y})`;
+    });
+
+  // Pulsing ring
+  markerGroups.append("circle")
+    .attr("class", "marker-pulse")
+    .attr("r", 5)
+    .attr("fill", "none")
+    .attr("stroke", d => d.color)
+    .attr("stroke-width", 1)
+    .attr("opacity", 0.4);
+
+  // Marker dot
+  markerGroups.append("circle")
     .attr("class", "marker")
-    .attr("cx", d => projection(d.coords)[0])
-    .attr("cy", d => projection(d.coords)[1])
     .attr("r", 5)
     .attr("fill", d => d.color)
     .attr("stroke", d => d.color)
-    .attr("stroke-width", 1.5)
-    .on("click", (event, d) => {
-      event.stopPropagation();
-      zoomToLocation(d);
-    });
+    .attr("stroke-width", 1.5);
 
-  // Draw labels
-  g.selectAll(".marker-label")
-    .data(locations)
-    .join("text")
+  // Labels
+  markerGroups.append("text")
     .attr("class", "marker-label")
-    .attr("x", d => projection(d.coords)[0])
-    .attr("y", d => projection(d.coords)[1] - 12)
+    .attr("y", -14)
     .text(d => d.name);
-});
 
-// ── Zoom to location ──
-function zoomToLocation(d) {
-  const [x, y] = projection(d.coords);
-  const scale = 6;
-  const tx = width / 2 - x * scale;
-  const ty = height / 2 - y * scale;
+  // ── Scroll handler ──
+  function onMapScroll() {
+    const rect = mapSpacer.getBoundingClientRect();
+    const totalTravel = mapSpacer.offsetHeight - window.innerHeight;
+    if (totalTravel <= 0) return;
+    const progress = Math.max(0, Math.min(1, -rect.top / totalTravel));
 
-  // Hide info panel immediately during transition
-  hideInfoPanel();
+    // Determine which step we're on
+    const stepFloat = progress * totalSteps;
+    const step = Math.min(Math.floor(stepFloat), totalSteps - 1);
+    const stepProgress = stepFloat - step; // 0→1 within current step
 
-  g.transition()
-    .duration(1200)
-    .ease(d3.easeCubicInOut)
-    .attr("transform", `translate(${tx},${ty}) scale(${scale})`)
-    .on("end", () => {
-      showInfoPanel(d);
+    if (step === currentStep) return;
+    currentStep = step;
+
+    if (step === 0) {
+      // World overview
+      goToWorldView();
+    } else {
+      // Zoom to location (step 1 = locations[0], etc.)
+      const loc = locations[step - 1];
+      goToLocation(loc);
+    }
+  }
+
+  function goToWorldView() {
+    g.transition()
+      .duration(1200)
+      .ease(d3.easeCubicInOut)
+      .attr("transform", "translate(0,0) scale(1)");
+
+    mapHeader.style.opacity = "1";
+    hideInfoPanel();
+
+    // Reset all markers
+    markerGroups.select(".marker")
+      .transition().duration(600)
+      .attr("r", 5);
+    markerGroups.select(".marker-pulse")
+      .transition().duration(600)
+      .attr("r", 5)
+      .attr("opacity", 0.4);
+  }
+
+  function goToLocation(loc) {
+    const [x, y] = projection(loc.coords);
+    const tx = mapW / 2 - x * zoomScale;
+    const ty = mapH / 2 - y * zoomScale;
+
+    // Hide header
+    mapHeader.style.opacity = "0";
+
+    // Hide info panel during transition
+    hideInfoPanel();
+
+    g.transition()
+      .duration(1500)
+      .ease(d3.easeCubicInOut)
+      .attr("transform", `translate(${tx},${ty}) scale(${zoomScale})`)
+      .on("end", () => {
+        showInfoPanel(loc);
+      });
+
+    // Highlight active marker, dim others
+    markerGroups.each(function (d) {
+      const isActive = d.name === loc.name;
+      d3.select(this).select(".marker")
+        .transition().duration(800)
+        .attr("r", isActive ? 6 : 4);
+      d3.select(this).select(".marker-pulse")
+        .transition().duration(800)
+        .attr("r", isActive ? 12 : 4)
+        .attr("opacity", isActive ? 0.6 : 0);
     });
+  }
 
-  backBtn.classList.remove("hidden");
-}
-
-// ── Reset zoom ──
-function resetZoom() {
-  hideInfoPanel();
-
-  g.transition()
-    .duration(1000)
-    .ease(d3.easeCubicInOut)
-    .attr("transform", "translate(0,0) scale(1)");
-
-  backBtn.classList.add("hidden");
-}
-
-backBtn.addEventListener("click", resetZoom);
+  window.addEventListener("scroll", onMapScroll, { passive: true });
+  onMapScroll();
+});
 
 // ── Info panel controls ──
 function showInfoPanel(d) {
   infoTitle.textContent = d.name;
+  infoTitle.style.color = d.color;
   infoText.textContent = d.description;
   infoPanel.classList.remove("hidden");
 }

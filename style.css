@@ -74,6 +74,10 @@ body {
   height: 300vh;
 }
 
+.pin-spacer--map {
+  height: 900vh;
+}
+
 .pinned-page {
   position: sticky;
   top: 0;
@@ -244,6 +248,7 @@ body {
 #map-header {
   text-align: center;
   margin-bottom: 0.5rem;
+  transition: opacity 0.6s ease;
 }
 
 .map-title {
@@ -277,26 +282,14 @@ body {
   fill: #1e1e1e;
   stroke: #333;
   stroke-width: 0.5;
-  cursor: pointer;
-  transition: fill 0.2s;
-}
-
-#map .country:hover {
-  fill: #2a2a2a;
 }
 
 #map .ocean {
   fill: #0a0a0a;
-  cursor: pointer;
 }
 
 #map .marker {
-  cursor: pointer;
-  transition: r 0.2s;
-}
-
-#map .marker:hover {
-  r: 8;
+  pointer-events: none;
 }
 
 #map .marker-label {
@@ -306,29 +299,7 @@ body {
   text-anchor: middle;
 }
 
-/* Back button */
-#back-btn {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  background: rgba(30, 30, 30, 0.9);
-  color: #e0e0e0;
-  border: 1px solid #444;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  z-index: 10;
-  opacity: 1;
-  transition: opacity 0.4s ease, background 0.2s;
-}
-
-#back-btn:hover {
-  background: rgba(60, 60, 60, 0.9);
-}
-
-#back-btn.hidden {
-  opacity: 0;
+#map .marker-pulse {
   pointer-events: none;
 }
 
