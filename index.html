@@ -4,17 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dark Tourism</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Preloader -->
-  <div id="preloader">
-    <canvas id="noise-canvas"></canvas>
-    <div id="preloader-content">
-      <span id="preloader-percent">0%</span>
-    </div>
-  </div>
 
   <!-- Hero section -->
   <div class="pin-spacer pin-spacer--hero">
@@ -80,20 +73,92 @@
   </div>
 
   <!-- Map scrollytelling section -->
-  <div class="pin-spacer pin-spacer--map">
-    <section id="map-section" class="pinned-page">
-      <div id="map-header">
-        <h2 class="map-title">Explore the sites</h2>
-        <p class="map-subtitle">Scroll to travel across the globe and discover each location.</p>
+  <div id="map-story">
+    <div id="map"></div>
+    <!-- Street View exploration window -->
+    <div id="streetview-panel">
+      <button id="streetview-close">&times;</button>
+      <div class="streetview-wrapper">
+        <iframe id="streetview-iframe" src="about:blank" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-      <div id="map-container">
-        <svg id="map"></svg>
-        <div id="info-panel" class="hidden">
-          <h3 id="info-title"></h3>
-          <p id="info-text"></p>
+    </div>
+    <div id="map-chapters">
+      <div class="map-chapter active" id="chapter-intro">
+        <div class="chapter-card">
+          <h2 class="map-title">Explore the sites</h2>
+          <p>Scroll to travel across the globe and discover each location up close.</p>
         </div>
       </div>
-    </section>
+      <div class="map-chapter" id="chapter-pompeii">
+        <div class="chapter-card">
+          <span class="chapter-index">01</span>
+          <h3>Pompeii</h3>
+          <p>In 79 AD, Mount Vesuvius erupted and buried the Roman city under metres of volcanic ash. Rediscovered in the 18th century, the site offers an extraordinarily preserved snapshot of daily life in antiquity — complete with plaster casts of the victims' final moments.</p>
+        </div>
+      </div>
+      <div class="map-chapter" id="chapter-groundzero">
+        <div class="chapter-card">
+          <span class="chapter-index">02</span>
+          <h3>Ground Zero</h3>
+          <p>On September 11, 2001, terrorist attacks destroyed the World Trade Center towers, killing nearly 3,000 people. The National September 11 Memorial now stands where the towers once rose — two vast reflecting pools set within the footprints of the original buildings.</p>
+        </div>
+      </div>
+      <div class="map-chapter" id="chapter-fukushima">
+        <div class="chapter-card">
+          <span class="chapter-index">03</span>
+          <h3>Fukushima</h3>
+          <p>On March 11, 2011, a massive earthquake and tsunami triggered a nuclear meltdown at the Fukushima Daiichi power plant. The exclusion zone remains partially closed, but guided tours now take visitors through abandoned towns frozen in time.</p>
+        </div>
+      </div>
+      <div class="map-chapter" id="chapter-auschwitz">
+        <div class="chapter-card">
+          <span class="chapter-index">04</span>
+          <h3>Auschwitz-Birkenau</h3>
+          <p>Between 1940 and 1945, over 1.1 million people — mostly Jews — were murdered at Auschwitz-Birkenau. Today the former concentration camp stands as a UNESCO World Heritage site, drawing over two million visitors each year to bear witness to the horrors of the Holocaust.</p>
+        </div>
+      </div>
+      <div class="map-chapter" id="chapter-syria">
+        <div class="chapter-card">
+          <span class="chapter-index">05</span>
+          <h3>War Tourism — Syria</h3>
+          <p>Since 2011, the Syrian civil war has devastated entire cities. Organised tours now take visitors through the ruins of Homs and Aleppo — a controversial practice that blurs the line between bearing witness and voyeurism in an active conflict zone.</p>
+        </div>
+      </div>
+      <div class="map-chapter" id="chapter-sarajevo">
+        <div class="chapter-card">
+          <span class="chapter-index">06</span>
+          <h3>Human Safari — Sarajevo</h3>
+          <p>Guided tours through war-scarred neighbourhoods of Sarajevo, where the 1990s siege left deep scars. Visitors walk past bullet-pocked facades and sniper alleys — tragedy turned into spectacle, raising questions about ethics and memory.</p>
+        </div>
+      </div>
+      <div class="map-chapter" id="chapter-chernobyl">
+        <div class="chapter-card">
+          <span class="chapter-index">07</span>
+          <h3>Chernobyl</h3>
+          <p>The 1986 Chernobyl disaster was the worst nuclear accident in history. The city of Pripyat was evacuated overnight, leaving behind schools, hospitals, and an amusement park that never opened. Today, the exclusion zone draws hundreds of thousands of visitors each year.</p>
+        </div>
+      </div>
+      <div class="map-chapter" id="chapter-capucins">
+        <div class="chapter-card">
+          <span class="chapter-index">08</span>
+          <h3>Capuchin Catacombs</h3>
+          <p>In the catacombs beneath the Capuchin monastery in Palermo, Sicily, over 8,000 mummified bodies line the walls — dressed in their finest clothes, arranged by age, gender, and social status. A macabre gallery of death that has drawn curious visitors since the 17th century.</p>
+        </div>
+      </div>
+      <div class="map-chapter" id="chapter-catacombes">
+        <div class="chapter-card">
+          <span class="chapter-index">09</span>
+          <h3>Catacombes de Paris</h3>
+          <p>Beneath the streets of Paris lie the remains of over six million people, transferred from overflowing cemeteries in the late 18th century. The ossuary stretches for kilometres through former limestone quarries — a subterranean city of the dead at the heart of the City of Light.</p>
+        </div>
+      </div>
+      <div class="map-chapter" id="chapter-outro">
+        <div class="chapter-card">
+          <h2 class="map-title">Dark tourism is everywhere.</h2>
+          <p>These are just a few of the places where history's darkest moments become destinations.</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Vote section -->
@@ -124,27 +189,27 @@
     </section>
   </div>
 
-  <!-- Timeline + Visits (combined, end of page) -->
+  <!-- Timeline + Visits (MapLibre bubbles, end of page) -->
   <section id="visits-section">
-    <div id="visits-top">
-      <h2 class="visits-title">Visits over the years</h2>
-      <p class="visits-subtitle">Move the slider to see how visitor numbers evolved from 2016 to 2026.</p>
-      <div id="timeline-container">
-        <svg id="timeline-map"></svg>
-        <div id="timeline-tooltip" class="hidden"></div>
-      </div>
-      <div id="slider-wrapper">
-        <span id="slider-year-label">2016</span>
-        <input type="range" id="year-slider" min="2016" max="2026" value="2016" step="1">
-        <div id="slider-ticks"></div>
-      </div>
+    <h2 class="visits-title">Visits over the years</h2>
+    <p class="visits-subtitle">Move the slider to see how visitor numbers evolved from 2016 to 2026.</p>
+    <div id="timeline-container">
+      <div id="timeline-map"></div>
+      <div id="timeline-tooltip" class="tl-tooltip-hidden"></div>
+    </div>
+    <div id="slider-wrapper">
+      <span id="slider-year-label">2016</span>
+      <input type="range" id="year-slider" min="2016" max="2026" value="2016" step="1">
+      <div id="slider-ticks"></div>
     </div>
     <div id="visits-list"></div>
   </section>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
-  <script src="preloader.js"></script>
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="text-reveal.js"></script>
   <script src="main.js"></script>
   <script src="map.js"></script>
   <script src="timeline.js"></script>

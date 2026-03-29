@@ -1,11 +1,8 @@
 // ══════════════════════════════════════════════════
-//  Timeline map — Dark Tourism visits (2016–2026)
+//  Timeline — MapLibre GL bubble map (2016–2026)
 // ══════════════════════════════════════════════════
 
-// ── Visit data: array of site objects ──
-// Each site has coordinates and a `visits` map keyed by year.
-// Values = approximate annual visitors (in thousands).
-// Sources: site reports, UNESCO, news articles — rounded for clarity.
+// ── Visit data (visitors in thousands) ──
 const sitesData = [
   {
     name: "Pompeii",
@@ -89,89 +86,154 @@ const sitesData = [
   }
 ];
 
-// ── Dimensions ──
-const tlContainer = document.getElementById("timeline-container");
-const tlWidth = 900;
-const tlHeight = 420;
+// ── Max visitors (for radius scaling) ──
+const maxVisitors = Math.max(
+  ...sitesData.flatMap(s => Object.values(s.visits))
+);
 
-const tlSvg = d3.select("#timeline-map")
-  .attr("viewBox", `0 0 ${tlWidth} ${tlHeight}`);
+// ── Build GeoJSON for a given year ──
+function buildGeoJSON(year) {
+  return {
+    type: "FeatureCollection",
+    features: sitesData.map(site => ({
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: site.coords
+      },
+      properties: {
+        name: site.name,
+        color: site.color,
+        visitors: site.visits[year],
+        // Radius: sqrt scale, 4px min → 40px max
+        radius: 4 + Math.sqrt(site.visits[year] / maxVisitors) * 36
+      }
+    }))
+  };
+}
 
-const tlProjection = d3.geoNaturalEarth1()
-  .scale(tlWidth / 5.5)
-  .translate([tlWidth / 2, tlHeight / 2]);
+// ── Format visitors for display ──
+function formatVisits(thousands) {
+  if (thousands >= 1000) return (thousands / 1000).toFixed(1) + "M";
+  return thousands + "K";
+}
 
-const tlPath = d3.geoPath().projection(tlProjection);
+// ── Dark tile style (no labels) ──
+const tlStyle = {
+  version: 8,
+  glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+  sources: {
+    "carto-dark": {
+      type: "raster",
+      tiles: [
+        "https://a.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}@2x.png",
+        "https://b.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}@2x.png",
+        "https://c.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}@2x.png"
+      ],
+      tileSize: 256
+    }
+  },
+  layers: [
+    { id: "base", type: "raster", source: "carto-dark", minzoom: 0, maxzoom: 20 }
+  ]
+};
 
-const tlG = tlSvg.append("g");
+// ── Create MapLibre map ──
+const tlMap = new maplibregl.Map({
+  container: "timeline-map",
+  style: tlStyle,
+  center: [20, 25],
+  zoom: 1.5,
+  attributionControl: false,
+  interactive: false  // no pan/zoom — just a data display
+});
 
-// ── Radius scale (visits in thousands → pixel radius) ──
-// Collect all visit values to set domain
-const allVisits = sitesData.flatMap(s => Object.values(s.visits));
-const radiusScale = d3.scaleSqrt()
-  .domain([0, d3.max(allVisits)])
-  .range([3, 40]);
-
-// ── Tooltip element ──
+// ── Tooltip ──
 const tlTooltip = document.getElementById("timeline-tooltip");
+const tlContainer = document.getElementById("timeline-container");
 
-// ── Draw world map ──
-const tlWorldUrl =
-  "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+// ── On map load: add source + layers ──
+tlMap.on("load", () => {
+  const initialYear = 2016;
 
-d3.json(tlWorldUrl).then(world => {
-  const countries = topojson.feature(world, world.objects.countries);
+  // GeoJSON source
+  tlMap.addSource("tourisme", {
+    type: "geojson",
+    data: buildGeoJSON(initialYear)
+  });
 
-  // Ocean
-  tlG.append("rect")
-    .attr("class", "tl-ocean")
-    .attr("width", tlWidth)
-    .attr("height", tlHeight);
+  // Glow layer (larger, blurred circles behind)
+  tlMap.addLayer({
+    id: "tourisme-glow",
+    type: "circle",
+    source: "tourisme",
+    paint: {
+      "circle-radius": ["*", ["get", "radius"], 1.6],
+      "circle-color": ["get", "color"],
+      "circle-opacity": 0.15,
+      "circle-blur": 1
+    }
+  });
 
-  // Countries
-  tlG.selectAll(".tl-country")
-    .data(countries.features)
-    .join("path")
-    .attr("class", "tl-country")
-    .attr("d", tlPath);
+  // Main circle layer
+  tlMap.addLayer({
+    id: "tourisme-circles",
+    type: "circle",
+    source: "tourisme",
+    paint: {
+      "circle-radius": ["get", "radius"],
+      "circle-color": ["get", "color"],
+      "circle-opacity": 0.8,
+      "circle-stroke-width": 1.5,
+      "circle-stroke-color": ["get", "color"],
+      "circle-stroke-opacity": 1,
+      // Smooth transition when data changes
+      "circle-radius-transition": { duration: 500, delay: 0 },
+      "circle-opacity-transition": { duration: 300, delay: 0 }
+    }
+  });
 
-  // ── Bubble groups ──
-  const bubbleGroups = tlG.selectAll(".tl-bubble-group")
-    .data(sitesData)
-    .join("g")
-    .attr("class", "tl-bubble-group")
-    .attr("transform", d => {
-      const [x, y] = tlProjection(d.coords);
-      return `translate(${x},${y})`;
-    });
+  // Label layer
+  tlMap.addLayer({
+    id: "tourisme-labels",
+    type: "symbol",
+    source: "tourisme",
+    layout: {
+      "text-field": ["get", "name"],
+      "text-font": ["Open Sans Semibold"],
+      "text-size": 11,
+      "text-offset": [0, 2.2],
+      "text-anchor": "top",
+      "text-allow-overlap": true
+    },
+    paint: {
+      "text-color": "#bbb",
+      "text-halo-color": "#000",
+      "text-halo-width": 1.5
+    }
+  });
 
-  // Bubbles
-  bubbleGroups.append("circle")
-    .attr("class", "tl-bubble")
-    .attr("r", d => radiusScale(d.visits[2016]))
-    .attr("fill", d => d.color)
-    .attr("stroke", d => d.color)
-    .on("mouseenter", (event, d) => showTooltip(event, d))
-    .on("mousemove", (event, d) => moveTooltip(event))
-    .on("mouseleave", () => hideTooltip());
+  // ── Hover tooltip ──
+  tlMap.on("mousemove", "tourisme-circles", (e) => {
+    if (!e.features.length) return;
+    const props = e.features[0].properties;
+    const year = +document.getElementById("year-slider").value;
 
-  // Labels (site name, below bubble)
-  bubbleGroups.append("text")
-    .attr("class", "tl-label")
-    .attr("y", d => radiusScale(d.visits[2016]) + 14)
-    .text(d => d.name);
+    tlTooltip.innerHTML =
+      `<div class="tt-name" style="color:${props.color}">${props.name}</div>` +
+      `<div class="tt-visits">${formatVisits(props.visitors)} visitors (${year})</div>`;
+    tlTooltip.classList.remove("tl-tooltip-hidden");
 
-  // ── Build visits list at the bottom ──
-  const visitsList = document.getElementById("visits-list");
+    const rect = tlContainer.getBoundingClientRect();
+    tlTooltip.style.left = (e.originalEvent.clientX - rect.left + 15) + "px";
+    tlTooltip.style.top = (e.originalEvent.clientY - rect.top - 10) + "px";
 
-  sitesData.forEach(site => {
-    const item = document.createElement("div");
-    item.className = "visit-item";
-    item.innerHTML =
-      `<span class="visit-dot" style="background:${site.color}"></span>` +
-      `<span class="visit-name">${site.name}</span>` +
-      `<span class="visit-count" data-site="${site.name}">${formatVisits(site.visits[2016])}</span>`;
-    visitsList.appendChild(item);
+    tlMap.getCanvas().style.cursor = "pointer";
+  });
+
+  tlMap.on("mouseleave", "tourisme-circles", () => {
+    tlTooltip.classList.add("tl-tooltip-hidden");
+    tlMap.getCanvas().style.cursor = "";
   });
 
   // ── Slider interaction ──
@@ -181,23 +243,26 @@ d3.json(tlWorldUrl).then(world => {
   slider.addEventListener("input", () => {
     const year = +slider.value;
     yearLabel.textContent = year;
-    updateBubbles(year);
+
+    // Update GeoJSON → MapLibre animates circle-radius automatically
+    tlMap.getSource("tourisme").setData(buildGeoJSON(year));
+
+    // Update visits list
     updateVisitsList(year);
   });
 
-  function updateBubbles(year) {
-    bubbleGroups.select(".tl-bubble")
-      .transition()
-      .duration(400)
-      .ease(d3.easeCubicOut)
-      .attr("r", d => radiusScale(d.visits[year]));
+  // ── Build visits list ──
+  const visitsList = document.getElementById("visits-list");
 
-    bubbleGroups.select(".tl-label")
-      .transition()
-      .duration(400)
-      .ease(d3.easeCubicOut)
-      .attr("y", d => radiusScale(d.visits[year]) + 14);
-  }
+  sitesData.forEach(site => {
+    const item = document.createElement("div");
+    item.className = "visit-item";
+    item.innerHTML =
+      `<span class="visit-dot" style="background:${site.color}"></span>` +
+      `<span class="visit-name">${site.name}</span>` +
+      `<span class="visit-count" data-site="${site.name}">${formatVisits(site.visits[initialYear])}</span>`;
+    visitsList.appendChild(item);
+  });
 
   function updateVisitsList(year) {
     sitesData.forEach(site => {
@@ -206,7 +271,7 @@ d3.json(tlWorldUrl).then(world => {
     });
   }
 
-  // ── Generate slider tick marks ──
+  // ── Slider tick marks ──
   const ticksContainer = document.getElementById("slider-ticks");
   for (let y = 2016; y <= 2026; y++) {
     const span = document.createElement("span");
@@ -214,38 +279,3 @@ d3.json(tlWorldUrl).then(world => {
     ticksContainer.appendChild(span);
   }
 });
-
-// ── Tooltip helpers ──
-let currentSite = null;
-
-function showTooltip(event, d) {
-  currentSite = d;
-  const year = +document.getElementById("year-slider").value;
-  const visits = d.visits[year];
-
-  tlTooltip.innerHTML =
-    `<div class="tt-name">${d.name}</div>` +
-    `<div class="tt-visits">${formatVisits(visits)} visitors (${year})</div>`;
-  tlTooltip.classList.remove("hidden");
-  moveTooltip(event);
-}
-
-function moveTooltip(event) {
-  const rect = tlContainer.getBoundingClientRect();
-  const x = event.clientX - rect.left + 15;
-  const y = event.clientY - rect.top - 10;
-  tlTooltip.style.left = x + "px";
-  tlTooltip.style.top = y + "px";
-}
-
-function hideTooltip() {
-  currentSite = null;
-  tlTooltip.classList.add("hidden");
-}
-
-function formatVisits(thousands) {
-  if (thousands >= 1000) {
-    return (thousands / 1000).toFixed(1) + "M";
-  }
-  return thousands + "K";
-}
