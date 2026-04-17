@@ -2,6 +2,28 @@
 //  Scroll Pinning — full-site sticky pages
 // ══════════════════════════════════════════════════════
 
+// ── Global scroll progress bar ──
+const progressFill = document.getElementById('scroll-progress-fill');
+let progressTicking = false;
+
+function updateScrollProgress() {
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+  progressFill.style.width = pct + '%';
+  progressTicking = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (!progressTicking) {
+    requestAnimationFrame(updateScrollProgress);
+    progressTicking = true;
+  }
+}, { passive: true });
+
+window.addEventListener('resize', updateScrollProgress);
+updateScrollProgress();
+
 // ── Inject background images from data-bg attributes ──
 const bgStyleSheet = document.createElement('style');
 const bgRules = [];
