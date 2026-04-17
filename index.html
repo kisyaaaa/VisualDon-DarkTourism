@@ -202,7 +202,13 @@
     </div>
     <div id="slider-wrapper">
       <span id="slider-year-label">2016</span>
-      <input type="range" id="year-slider" min="2016" max="2026" value="2016" step="1">
+      <div id="slider-row">
+        <button id="play-btn" type="button" aria-label="Play timeline">
+          <span class="play-icon">&#9654;</span>
+          <span class="pause-icon">&#10074;&#10074;</span>
+        </button>
+        <input type="range" id="year-slider" min="2016" max="2026" value="2016" step="1">
+      </div>
       <div id="slider-ticks"></div>
     </div>
     <div id="visits-list"></div>

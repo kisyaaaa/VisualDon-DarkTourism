@@ -251,6 +251,59 @@ tlMap.on("load", () => {
     updateVisitsList(year);
   });
 
+  // ── Auto-play button ──
+  const playBtn = document.getElementById("play-btn");
+  const PLAY_INTERVAL = 1000; // ms between year steps
+  let playTimer = null;
+
+  function stopPlay() {
+    clearInterval(playTimer);
+    playTimer = null;
+    playBtn.classList.remove("playing");
+    playBtn.setAttribute("aria-label", "Play timeline");
+  }
+
+  function startPlay() {
+    // If we're at the end, rewind to start
+    if (+slider.value >= +slider.max) slider.value = slider.min;
+
+    playBtn.classList.add("playing");
+    playBtn.setAttribute("aria-label", "Pause timeline");
+
+    playTimer = setInterval(() => {
+      let next = +slider.value + 1;
+      if (next > +slider.max) next = +slider.min; // loop back
+      slider.value = next;
+      slider.dispatchEvent(new Event("input"));
+    }, PLAY_INTERVAL);
+  }
+
+  playBtn.addEventListener("click", () => {
+    if (playTimer) stopPlay();
+    else startPlay();
+  });
+
+  // Stop auto-play if user manually drags the slider
+  slider.addEventListener("pointerdown", () => {
+    if (playTimer) stopPlay();
+  });
+
+  // ── Auto-start when the Visits section enters the viewport (first time) ──
+  const visitsSection = document.getElementById("visits-section");
+  let autoStarted = false;
+
+  const visitsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !autoStarted) {
+        autoStarted = true;
+        startPlay();
+        visitsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.35 });
+
+  visitsObserver.observe(visitsSection);
+
   // ── Build visits list ──
   const visitsList = document.getElementById("visits-list");
 
