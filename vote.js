@@ -12,11 +12,11 @@ const places = [
 ];
 
 // ── Dimensions ──
-const voteMargin = { top: 60, right: 60, bottom: 160, left: 60 };
-const voteWidth = 900 - voteMargin.left - voteMargin.right;
-const voteHeight = 380 - voteMargin.top - voteMargin.bottom;
+const voteMargin = { top: 60, right: 60, bottom: 220, left: 60 };
+const voteWidth = 1400 - voteMargin.left - voteMargin.right;
+const voteHeight = 500 - voteMargin.top - voteMargin.bottom;
 const axisY = voteMargin.top + voteHeight / 2;
-const circleRadius = 18;
+const circleRadius = 27;
 
 const voteSvg = d3.select("#vote-svg")
   .attr("viewBox", `0 0 ${voteWidth + voteMargin.left + voteMargin.right} ${voteHeight + voteMargin.top + voteMargin.bottom}`);
@@ -71,17 +71,25 @@ voteG.append("text")
   .attr("y", axisY - 25)
   .text("Dark");
 
-// ── Place circles (start stacked below the axis in two rows) ──
-const startY = axisY + 65;
-const row2Y = axisY + 115;
-const perRow = Math.ceil(places.length / 2);
-const spacingRow = voteWidth / (perRow + 1);
+// ── Place circles (start stacked below the axis in two rows, both centred) ──
+const startY = axisY + 110;
+const row2Y = axisY + 200;
+const row1Count = 5;
+const row2Count = places.length - row1Count;
+const spacingRow = voteWidth / (row1Count + 1);
 
 places.forEach((d, i) => {
-  const row = i < perRow ? 0 : 1;
-  const col = row === 0 ? i : i - perRow;
-  d.x = spacingRow * (col + 1);
-  d.y = row === 0 ? startY : row2Y;
+  const row = i < row1Count ? 0 : 1;
+  if (row === 0) {
+    d.x = spacingRow * (i + 1);
+    d.y = startY;
+  } else {
+    const col = i - row1Count;
+    const rowWidth = (row2Count - 1) * spacingRow;
+    const startX = (voteWidth - rowWidth) / 2;
+    d.x = startX + col * spacingRow;
+    d.y = row2Y;
+  }
   d.placed = false;
 });
 

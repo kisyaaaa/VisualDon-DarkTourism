@@ -121,11 +121,6 @@ const svg = d3.select("#timeline-map")
   .attr("viewBox", `0 0 ${width} ${height}`)
   .attr("preserveAspectRatio", "xMidYMid meet");
 
-// Ocean background
-svg.append("rect")
-  .attr("width", width)
-  .attr("height", height)
-  .attr("fill", "#0a0a0a");
 
 // ── Projection — Natural Earth ──
 const projection = d3.geoNaturalEarth1()
@@ -423,10 +418,10 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
     const focusArea = {
       type: "Polygon",
       coordinates: [[
-        [-95, 20], [155, 20], [155, 62], [-95, 62], [-95, 20]
+        [-80, 30], [145, 30], [145, 56], [-80, 56], [-80, 30]
       ]]
     };
-    projection.fitExtent([[10, 10], [width - 10, height - 10]], focusArea);
+    projection.fitExtent([[10, 10], [width - 10, height - 200]], focusArea);
 
     // Graticule (subtle grid)
     const graticule = d3.geoGraticule().step([20, 20]);
