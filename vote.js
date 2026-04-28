@@ -12,9 +12,9 @@ const places = [
 ];
 
 // ── Dimensions ──
-const voteMargin = { top: 60, right: 60, bottom: 220, left: 60 };
+const voteMargin = { top: 60, right: 60, bottom: 280, left: 60 };
 const voteWidth = 1400 - voteMargin.left - voteMargin.right;
-const voteHeight = 500 - voteMargin.top - voteMargin.bottom;
+const voteHeight = 580 - voteMargin.top - voteMargin.bottom;
 const axisY = voteMargin.top + voteHeight / 2;
 const circleRadius = 27;
 
@@ -55,25 +55,27 @@ voteG.selectAll(".tick-label")
   .join("text")
   .attr("class", "tick-label")
   .attr("x", d => xScale(d))
-  .attr("y", axisY + 28)
+  .attr("y", axisY + 38)
   .text(d => d);
 
-// ── Labels at ends ──
+// ── Labels at ends (baseline-aligned with each other) ──
 voteG.append("text")
   .attr("class", "axis-label-left")
   .attr("x", 0)
-  .attr("y", axisY - 25)
+  .attr("y", axisY - 22)
+  .attr("dominant-baseline", "alphabetic")
   .text("Not dark");
 
 voteG.append("text")
   .attr("class", "axis-label-right")
   .attr("x", voteWidth)
-  .attr("y", axisY - 25)
+  .attr("y", axisY - 22)
+  .attr("dominant-baseline", "alphabetic")
   .text("Dark");
 
 // ── Place circles (start stacked below the axis in two rows, both centred) ──
 const startY = axisY + 110;
-const row2Y = axisY + 200;
+const row2Y = axisY + 260;
 const row1Count = 5;
 const row2Count = places.length - row1Count;
 const spacingRow = voteWidth / (row1Count + 1);
@@ -107,10 +109,17 @@ placeGroups.append("circle")
   .attr("fill", d => d.color)
   .attr("stroke", d => d.color);
 
-// Name labels below circles
-placeGroups.append("text")
+// Name labels below circles — foreignObject so long names wrap on 2 lines
+const labelWidth = 180;
+const labelMarginTop = 12;
+placeGroups.append("foreignObject")
+  .attr("class", "place-label-fo")
+  .attr("x", -labelWidth / 2)
+  .attr("y", circleRadius + labelMarginTop)
+  .attr("width", labelWidth)
+  .attr("height", 60)
+  .append("xhtml:div")
   .attr("class", "place-label")
-  .attr("y", circleRadius + 14)
   .text(d => d.name);
 
 // Score labels inside circles (hidden until placed)

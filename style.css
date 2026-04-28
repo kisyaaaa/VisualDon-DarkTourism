@@ -722,9 +722,9 @@ body {
 
 .vote-subtitle {
   font-size: 0.95rem;
-  color: #777;
+  color: #a0a0a0;
   letter-spacing: 0.03em;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.2rem;
 }
 
 #vote-container {
@@ -741,6 +741,7 @@ body {
 #vote-svg .axis-line {
   stroke: #fff;
   stroke-width: 2;
+  stroke-linecap: butt;
 }
 
 #vote-svg .tick-line {
@@ -785,11 +786,18 @@ body {
   filter: brightness(1.4) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
 }
 
-#vote-svg .place-label {
-  fill: #ccc;
-  font-size: 16px;
-  text-anchor: middle;
+#vote-svg .place-label-fo {
   pointer-events: none;
+  overflow: visible;
+}
+
+#vote-svg .place-label {
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.25;
+  text-align: center;
+  pointer-events: none;
+  font-family: 'Open Sans', 'Segoe UI', sans-serif;
 }
 
 #vote-svg .place-score {
@@ -807,26 +815,31 @@ body {
 
 #submit-btn {
   margin-top: 2.5rem;
-  background: transparent;
-  color: #e0e0e0;
-  border: 1px solid #555;
-  padding: 0.8rem 2.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border: 2px solid #cfcfcf;
+  padding: 0.9rem 2.8rem;
   font-size: 1rem;
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.3s, border-color 0.3s;
+  transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.15s;
 }
 
 #submit-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #999;
+  background: #fff;
+  color: #0a0a0a;
+  border-color: #fff;
+  transform: translateY(-1px);
 }
 
 #submit-btn:disabled {
+  background: rgba(46, 204, 113, 0.12);
   border-color: #2ecc71;
   color: #2ecc71;
   cursor: default;
+  transform: none;
 }
 
 #submit-confirmation {
