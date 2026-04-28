@@ -56,7 +56,7 @@ const sitesData = [
   },
   {
     name: "Fukushima",
-    coords: [141.0325, 37.4211],
+    coords: [141.034977, 37.475085],
     color: "#3498db",
     visits: {
       2016: 15,   2017: 20,   2018: 28,   2019: 35,
@@ -65,23 +65,33 @@ const sitesData = [
     }
   },
   {
-    name: "Hiroshima",
-    coords: [132.4553, 34.3853],
-    color: "#00cec9",
+    name: "Syria",
+    coords: [36.710772, 34.743585],
+    color: "#fd79a8",
     visits: {
-      2016: 1700, 2017: 1740, 2018: 1800, 2019: 1850,
-      2020: 350,  2021: 600,  2022: 1100, 2023: 1500,
-      2024: 1700, 2025: 1800, 2026: 1900
+      2016: 2,    2017: 3,    2018: 5,    2019: 8,
+      2020: 1,    2021: 2,    2022: 6,    2023: 10,
+      2024: 14,   2025: 18,   2026: 22
     }
   },
   {
-    name: "Robben Island",
-    coords: [18.3665, -33.8076],
-    color: "#fd79a8",
+    name: "Human Safari",
+    coords: [18.408751, 43.849402],
+    color: "#1abc9c",
     visits: {
-      2016: 370,  2017: 380,  2018: 360,  2019: 390,
-      2020: 50,   2021: 100,  2022: 280,  2023: 330,
-      2024: 360,  2025: 380,  2026: 400
+      2016: 60,   2017: 75,   2018: 90,   2019: 110,
+      2020: 15,   2021: 35,   2022: 70,   2023: 95,
+      2024: 115,  2025: 130,  2026: 140
+    }
+  },
+  {
+    name: "Capucins",
+    coords: [13.3388, 38.1147],
+    color: "#e84393",
+    visits: {
+      2016: 130,  2017: 140,  2018: 150,  2019: 160,
+      2020: 30,   2021: 60,   2022: 120,  2023: 145,
+      2024: 160,  2025: 175,  2026: 185
     }
   }
 ];
@@ -395,8 +405,15 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
     const land = topojson.feature(topology, topology.objects.land);
     const countries = topojson.feature(topology, topology.objects.countries);
 
-    // Fit Natural Earth to the container with a small margin
-    projection.fitExtent([[10, 10], [width - 10, height - 10]], land);
+    // Fit projection on the northern hemisphere area where all sites are located
+    // (from Ground Zero in the west to Fukushima in the east)
+    const focusArea = {
+      type: "Polygon",
+      coordinates: [[
+        [-95, 20], [155, 20], [155, 62], [-95, 62], [-95, 20]
+      ]]
+    };
+    projection.fitExtent([[10, 10], [width - 10, height - 10]], focusArea);
 
     // Graticule (subtle grid)
     const graticule = d3.geoGraticule().step([20, 20]);
