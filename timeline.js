@@ -536,14 +536,25 @@ function handleLeave() {
 const slider = document.getElementById("year-slider");
 const yearLabel = document.getElementById("slider-year-label");
 
+// COVID-19 banner: visible from 2020 through 2022 (pandemic years)
+const covidBanner = document.getElementById("covid-banner");
+function updateCovidBanner(year) {
+  if (!covidBanner) return;
+  covidBanner.classList.toggle("hidden", year < 2020 || year > 2022);
+}
+
 slider.addEventListener("input", () => {
   const year = +slider.value;
   yearLabel.textContent = year;
   drawSites(year);
   updateVisitsList(year);
   renderTooltip();
+  updateCovidBanner(year);
   if (currentZoomed) updateActiveYear(year);
 });
+
+// Initial state
+updateCovidBanner(+slider.value);
 
 // ── Visits list (legend under the map) ──
 const visitsList = document.getElementById("visits-list");
