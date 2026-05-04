@@ -154,18 +154,31 @@ const zoomBehavior = d3.zoom()
     zoomGroup.attr("transform", event.transform);
     // Reposition all site elements to follow the map
     sitesGroup.selectAll("circle").attr("cx", pX).attr("cy", pY);
-    sitesGroup.selectAll("text.site-label").attr("x", pX).attr("y", pY);
   });
 
-// Apply zoom behavior but disable all default interactive handlers
-// (we only want programmatic zoom triggered by clicking a site)
+// Apply zoom behavior with interactive pan (drag) only.
+// Wheel zoom is disabled so the page can keep scrolling normally;
+// explicit zoom in/out is handled by the +/- buttons below.
 svg.call(zoomBehavior)
   .on("wheel.zoom", null)
-  .on("mousedown.zoom", null)
-  .on("dblclick.zoom", null)
-  .on("touchstart.zoom", null)
-  .on("touchmove.zoom", null)
-  .on("touchend.zoom", null);
+  .on("dblclick.zoom", null);
+
+// Zoom in/out buttons
+const zoomInBtn = document.getElementById("timeline-zoom-in");
+const zoomOutBtn = document.getElementById("timeline-zoom-out");
+
+if (zoomInBtn) {
+  zoomInBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    svg.transition().duration(300).call(zoomBehavior.scaleBy, 1.5);
+  });
+}
+if (zoomOutBtn) {
+  zoomOutBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    svg.transition().duration(300).call(zoomBehavior.scaleBy, 1 / 1.5);
+  });
+}
 
 // Click on empty area (ocean, graticule, land) → reset zoom
 svg.on("click", () => {
@@ -492,30 +505,6 @@ function drawSites(year) {
         .transition().duration(500).attr("r", d => d.radius)
     );
 
-  // Labels
-  sitesGroup.selectAll("text.site-label")
-    .data(data, d => d.name)
-    .join(
-      enter => enter.append("text")
-        .attr("class", "site-label")
-        .attr("x", pX)
-        .attr("y", pY)
-        .attr("dy", d => d.radius + 13)
-        .attr("text-anchor", "middle")
-        .attr("fill", "#bbb")
-        .attr("stroke", "#000")
-        .attr("stroke-width", 3)
-        .attr("paint-order", "stroke")
-        .style("font-family", "'Open Sans', 'Segoe UI', sans-serif")
-        .style("font-size", "11px")
-        .style("font-weight", 600)
-        .style("pointer-events", "none")
-        .text(d => d.name),
-      update => update
-        .attr("x", pX)
-        .attr("y", pY)
-        .transition().duration(500).attr("dy", d => d.radius + 13)
-    );
 }
 
 let hoveredSite = null;

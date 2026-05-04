@@ -4,7 +4,7 @@
 // ── Dimensions (reuse vote dimensions) ──
 const compMargin = { top: 80, right: 60, bottom: 60, left: 60 };
 const compWidth = voteWidth;
-const compHeight = places.length * 52 + compMargin.top + compMargin.bottom;
+const compHeight = places.length * 85 + compMargin.top + compMargin.bottom;
 const compAxisY = 50;
 
 const compSvg = d3.select("#compare-svg")
@@ -22,8 +22,8 @@ const compXScale = d3.scaleLinear()
 // ── Y scale: one row per place ──
 const compYScale = d3.scaleBand()
   .domain(places.map(d => d.name))
-  .range([0, places.length * 52])
-  .padding(0.35);
+  .range([0, places.length * 85])
+  .padding(0.4);
 
 // ── Draw horizontal axis at top ──
 compG.append("line")
@@ -101,7 +101,6 @@ const userCircles = rows.append("circle")
 // User score text
 const userScoreTexts = rows.append("text")
   .attr("class", "comp-score-label comp-user-score")
-  .attr("y", compYScale.bandwidth() / 2 - 14)
   .attr("opacity", 0);
 
 // ── Public average circles (start at same position, hidden) ──
@@ -119,7 +118,6 @@ const publicCircles = rows.append("circle")
 // Public score text
 const publicScoreTexts = rows.append("text")
   .attr("class", "comp-score-label comp-public-score")
-  .attr("y", compYScale.bandwidth() / 2 + 22)
   .attr("opacity", 0);
 
 // ── Load CSV and compute averages ──
@@ -168,23 +166,59 @@ d3.csv("Data/reponses_forms.csv").then(raw => {
 // ── Animation sequence ──
 function animateComparison() {
   const bandMid = compYScale.bandwidth() / 2;
+  const COLLISION_PX = 130;  // when user/public are closer than this, switch to lateral layout
+  const CIRCLE_R = 8;
+  const LATERAL_DX = 32;     // gap between circle edge and lateral text (added on top of CIRCLE_R)
 
-  // Step 1: Show user circles at their voted positions
+  function layoutFor(d) {
+    const userScore = d.placed ? xScale.invert(d.x) : 3;
+    const avgScore = publicAverages[d.name];
+    const userX = compXScale(userScore);
+    const avgX = compXScale(avgScore);
+    const close = Math.abs(userX - avgX) < COLLISION_PX;
+
+    if (close) {
+      // Lateral: each text sits on the OUTSIDE of its own circle, both at row centre.
+      // We anchor the text at the circle's centre and apply an explicit dx so it
+      // never overlaps the circle.
+      const userIsLeft = userX <= avgX;
+      return {
+        userScore, avgScore, userX, avgX,
+        userTextX: userX,
+        userDx:    userIsLeft ? -(CIRCLE_R + LATERAL_DX) : (CIRCLE_R + LATERAL_DX),
+        userAnchor: userIsLeft ? "end" : "start",
+        userY: bandMid,
+        userDy: "0.35em",
+        publicTextX: avgX,
+        publicDx:    userIsLeft ? (CIRCLE_R + LATERAL_DX) : -(CIRCLE_R + LATERAL_DX),
+        publicAnchor: userIsLeft ? "start" : "end",
+        publicY: bandMid,
+        publicDy: "0.35em"
+      };
+    }
+    // Stacked: user above, public below, both centred
+    return {
+      userScore, avgScore, userX, avgX,
+      userTextX: userX, userDx: 0, userAnchor: "middle", userY: bandMid - 18, userDy: "0",
+      publicTextX: avgX, publicDx: 0, publicAnchor: "middle", publicY: bandMid + 26, publicDy: "0"
+    };
+  }
+
+  // Step 1: user circles fade in at their voted positions
   userCircles
-    .attr("cx", d => {
-      const userScore = d.placed ? xScale.invert(d.x) : 3;
-      return compXScale(userScore);
-    })
+    .attr("cx", d => layoutFor(d).userX)
     .transition()
     .duration(600)
     .ease(d3.easeCubicOut)
     .attr("opacity", 1);
 
+  // User score text — final anchor / position set immediately, only opacity animates
   userScoreTexts
-    .attr("x", d => {
-      const userScore = d.placed ? xScale.invert(d.x) : 3;
-      return compXScale(userScore);
-    })
+    .attr("x", d => layoutFor(d).userTextX)
+    .attr("y", d => layoutFor(d).userY)
+    .attr("dx", d => layoutFor(d).userDx)
+    .attr("dy", d => layoutFor(d).userDy)
+    .attr("text-anchor", d => layoutFor(d).userAnchor)
     .text(d => {
       const userScore = d.placed ? +xScale.invert(d.x).toFixed(1) : "–";
       return `You: ${userScore}`;
@@ -194,12 +228,9 @@ function animateComparison() {
     .ease(d3.easeCubicOut)
     .attr("opacity", 1);
 
-  // Step 2: After a delay, animate public circles to their average positions
+  // Step 2: public circles slide from user position to public average
   publicCircles
-    .attr("cx", d => {
-      const userScore = d.placed ? xScale.invert(d.x) : 3;
-      return compXScale(userScore);
-    })
+    .attr("cx", d => layoutFor(d).userX)
     .transition()
     .delay(800)
     .duration(400)
@@ -207,13 +238,14 @@ function animateComparison() {
     .transition()
     .duration(1200)
     .ease(d3.easeCubicInOut)
-    .attr("cx", d => compXScale(publicAverages[d.name]));
+    .attr("cx", d => layoutFor(d).avgX);
 
   publicScoreTexts
-    .attr("x", d => {
-      const userScore = d.placed ? xScale.invert(d.x) : 3;
-      return compXScale(userScore);
-    })
+    .attr("x", d => layoutFor(d).userX)
+    .attr("y", d => layoutFor(d).publicY)
+    .attr("dx", d => layoutFor(d).publicDx)
+    .attr("dy", d => layoutFor(d).publicDy)
+    .attr("text-anchor", d => layoutFor(d).publicAnchor)
     .text(d => `Public: ${publicAverages[d.name]}`)
     .transition()
     .delay(800)
@@ -222,25 +254,21 @@ function animateComparison() {
     .transition()
     .duration(1200)
     .ease(d3.easeCubicInOut)
-    .attr("x", d => compXScale(publicAverages[d.name]));
+    .attr("x", d => layoutFor(d).publicTextX);
 
-  // Step 3: Draw connecting lines between user and public positions
+  // Step 3: connecting line between user and public
   rows.each(function (d) {
-    const userScore = d.placed ? xScale.invert(d.x) : 3;
-    const avgScore = publicAverages[d.name];
-    const x1 = compXScale(userScore);
-    const x2 = compXScale(avgScore);
-
+    const layout = layoutFor(d);
     d3.select(this).append("line")
       .attr("class", "comp-connector")
-      .attr("x1", x1)
-      .attr("x2", x1)
+      .attr("x1", layout.userX)
+      .attr("x2", layout.userX)
       .attr("y1", bandMid)
       .attr("y2", bandMid)
       .transition()
       .delay(1200)
       .duration(1000)
       .ease(d3.easeCubicInOut)
-      .attr("x2", x2);
+      .attr("x2", layout.avgX);
   });
 }
