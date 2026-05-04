@@ -60,9 +60,9 @@ const chapters = {
     iframeHTML: `<iframe src="https://www.google.com/maps/embed?pb=!4v1774526285283!6m8!1m7!1sCAoSF0NJSE0wb2dLRUlDQWdJREstUGE2andF!2m2!1d51.38937151272082!2d30.09909818242697!3f233.5052974780426!4f7.7657774633585035!5f0.7820865974627469" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`
   },
   "chapter-capucins": {
-    center: [13.3388, 38.1147], zoom: 6, pitch: 50, bearing: -10,
+    center: [13.3396631, 38.1118149], zoom: 6, pitch: 50, bearing: -10,
     duration: 10000, color: "#e84393",
-    iframeHTML: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1000!2d13.3388!3d38.1147!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1319ef3c1862d7b9%3A0x2d1ef6100fa01c08!2sCatacombs%20of%20the%20Capuchins!5e1!3m2!1sen!2s!4v1700000000000"
+    iframeHTML: `<iframe src="https://www.google.com/maps/embed?pb=!4v1774600000000!6m8!1m7!1sCAoSFkNJSE0wb2dLRUlDQWdJRDR3cWVYVWc.!2m2!1d38.1118149!2d13.3396631!3f227.62!4f1.79!5f0.7820865974627469" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`
   },
   "chapter-catacombes": {
     center: [2.332424, 48.833881], zoom: 6, pitch: 50, bearing: 35,
