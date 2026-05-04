@@ -121,6 +121,14 @@ body {
   height: 300vh;
 }
 
+.pin-spacer--visits {
+  height: 400vh;
+}
+
+.pin-spacer--conclusion {
+  height: 450vh;
+}
+
 
 .pinned-page {
   position: sticky;
@@ -764,7 +772,8 @@ body {
 
 /* ── Visits section (timeline map + visits list, end of page) ── */
 #visits-section {
-  position: relative;
+  position: sticky;
+  top: 0;
   background: #0d0d0d;
   height: 100vh;
   width: 100%;
@@ -1095,6 +1104,67 @@ body {
   border: 2px dashed #fff;
 }
 
+/* ── Conclusion section (pinned full-page) ── */
+#conclusion-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #141414 0%, #050505 75%);
+  padding: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.conclusion-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+/* Each stage is hidden by default — revealed by scroll progress */
+.conclusion-stage {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
+}
+
+.conclusion-stage.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.conclusion-title {
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  color: #f0f0f0;
+  margin: 0;
+  text-shadow: 0 0 32px rgba(150, 51, 186, 0.28);
+}
+
+.conclusion-lead {
+  font-size: 1.1rem;
+  line-height: 1.85;
+  color: #a8a8a8;
+  max-width: 720px;
+  margin: 0;
+}
+
+.conclusion-quote {
+  font-size: 1.7rem;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: #ddd;
+  margin: 1rem 0 0;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .hero-title {
@@ -1123,5 +1193,17 @@ body {
   .reveal-sm {
     width: 40vw;
     height: 25vh;
+  }
+
+  #conclusion-section {
+    padding: 4rem 1.2rem 3.5rem;
+  }
+
+  .conclusion-title {
+    font-size: 1.8rem;
+  }
+
+  .conclusion-quote {
+    font-size: 1.2rem;
   }
 }
