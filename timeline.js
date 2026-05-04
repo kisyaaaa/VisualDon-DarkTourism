@@ -202,10 +202,14 @@ function handleClick(event, d) {
   currentZoomed = d.name;
   zoomSession++;
   const mySession = zoomSession;
+  // Place the dot below the chart but ABOVE the slider/play controls.
+  // The slider wrapper occupies ~230px from the bottom; we leave extra
+  // room for the dot + halo so the marker stays fully visible.
+  const focusY = Math.min(height * 0.7, height - 300);
   svg.transition().duration(900).call(
     zoomBehavior.transform,
     d3.zoomIdentity
-      .translate(width / 2, height / 2)
+      .translate(width / 2, focusY)
       .scale(ZOOM_SCALE)
       .translate(-d.x, -d.y)
   );
@@ -234,21 +238,27 @@ function showColumns(site) {
   const cx0 = pX(site);
   const cy0 = pY(site);
 
+  // Lift the chart's ground line well ABOVE the dot so the marker sits
+  // visibly low beneath the chart, with generous breathing room between
+  // the year labels and the dot.
+  const dotRadius = site.radius || 8;
+  const groundY = cy0 - dotRadius - 60;
+
   const years = Array.from({ length: 11 }, (_, i) => 2016 + i);
   const maxVisits = Math.max(...years.map(y => site.visits[y]));
 
-  // Horizontal layout: columns spread left-to-right, centered on the site
-  const totalWidth = Math.min(width * 0.72, 680);
+  // Horizontal layout — narrower so it doesn't bump against the page title/legend
+  const totalWidth = Math.min(width * 0.58, 540);
   const colSpacing = totalWidth / years.length;
-  const colW = Math.min(colSpacing * 0.55, 38);
-  const depth = colW * 0.5;
+  const colW = Math.min(colSpacing * 0.5, 26);
+  const depth = colW * 0.55;
   const dx = depth * Math.cos(ISO_ANGLE);
   const dy = depth * Math.sin(ISO_ANGLE);
 
   const startX = cx0 - totalWidth / 2 + colSpacing / 2;
 
-  // Vertical: rise upward from the site point, bounded by available space
-  const maxHeight = Math.max(80, Math.min(cy0 - 70, height * 0.45));
+  // Reduced vertical span — leaves clear breathing room above for the page title
+  const maxHeight = Math.max(60, Math.min(groundY - 110, height * 0.30));
 
   const baseColor = d3.color(site.color);
   const topColor = baseColor.brighter(0.6).formatHex();
@@ -260,19 +270,37 @@ function showColumns(site) {
   // Swallow clicks so columns don't reset the zoom
   panel.on("click", (e) => e.stopPropagation());
 
-  // Floating title above
+  // Clip-path: hide everything BELOW the chart's ground line (groundY,
+  // which sits just above the dot). Combined with each column starting
+  // below ground and translating up, this gives the illusion of bars
+  // punching out of the map surface — without overlapping the site marker.
+  const clipId = `cols-clip-${Date.now()}`;
+  panel.append("defs")
+    .append("clipPath")
+    .attr("id", clipId)
+    .append("rect")
+    .attr("x", -10000).attr("y", -10000)
+    .attr("width", 20000).attr("height", 10000 + groundY);
+
+  // Layer that holds the 3D bars and gets clipped at the ground line
+  const grounded = panel.append("g").attr("clip-path", `url(#${clipId})`);
+
+  // Floating title above (NOT clipped)
   panel.append("text")
-    .attr("x", cx0).attr("y", cy0 - maxHeight - 22)
+    .attr("x", cx0).attr("y", groundY - maxHeight - 26)
     .attr("text-anchor", "middle")
     .attr("fill", site.color)
     .attr("stroke", "#000")
     .attr("stroke-width", 3)
     .attr("paint-order", "stroke")
     .style("font-family", "'Open Sans', 'Segoe UI', sans-serif")
-    .style("font-size", "13px")
+    .style("font-size", "12px")
     .style("font-weight", 700)
     .style("letter-spacing", "0.12em")
-    .text(`${site.name.toUpperCase()} — VISITS PER YEAR`);
+    .style("opacity", 0)
+    .text(`${site.name.toUpperCase()} — VISITS PER YEAR`)
+    .transition().delay(180).duration(450)
+    .style("opacity", 1);
 
   years.forEach((year, i) => {
     const visits = site.visits[year];
@@ -281,43 +309,69 @@ function showColumns(site) {
     const x1 = cx - colW / 2;
     const x2 = cx + colW / 2;
 
-    const g = panel.append("g")
+    // ── Bar geometry: built at FINAL size, then translated from underground ──
+    const g = grounded.append("g")
       .attr("class", "column")
-      .attr("data-year", year);
+      .attr("data-year", year)
+      // Start fully below the surface, ready to rise
+      .attr("transform", `translate(0, ${fullH + 14})`);
 
-    // Ground shadow at the base (ellipse, under the column)
-    g.append("ellipse")
+    // Right side face
+    g.append("polygon")
+      .attr("class", "col-right")
+      .attr("fill", sideColor)
+      .attr("points",
+        `${x2},${groundY} ` +
+        `${x2 + dx},${groundY - dy} ` +
+        `${x2 + dx},${groundY - fullH - dy} ` +
+        `${x2},${groundY - fullH}`
+      );
+
+    // Front face
+    g.append("rect")
+      .attr("class", "col-front")
+      .attr("fill", site.color)
+      .attr("x", x1).attr("y", groundY - fullH)
+      .attr("width", colW).attr("height", fullH);
+
+    // Top face — slight glow on top via a brighter fill
+    g.append("polygon")
+      .attr("class", "col-top")
+      .attr("fill", topColor)
+      .attr("points",
+        `${x1},${groundY - fullH} ` +
+        `${x2},${groundY - fullH} ` +
+        `${x2 + dx},${groundY - fullH - dy} ` +
+        `${x1 + dx},${groundY - fullH - dy}`
+      );
+
+    // ── Decorations on the panel (not clipped, not translated) ──
+
+    // Ground shadow — fades in under the bar as it lands
+    const shadow = panel.append("ellipse")
       .attr("class", "col-shadow")
-      .attr("cx", cx + dx / 2).attr("cy", cy0 + 2)
+      .attr("cx", cx + dx / 2).attr("cy", groundY + 2)
       .attr("rx", (colW + dx) / 2)
       .attr("ry", (dy + 4) / 2)
-      .attr("fill", "rgba(0, 0, 0, 0.45)")
+      .attr("fill", "rgba(0, 0, 0, 0.5)")
       .attr("filter", "blur(2px)")
       .style("opacity", 0);
 
-    // Right side face (starts flat at base)
-    const right = g.append("polygon")
-      .attr("class", "col-right")
-      .attr("fill", sideColor)
-      .attr("points", `${x2},${cy0} ${x2 + dx},${cy0 - dy} ${x2 + dx},${cy0 - dy} ${x2},${cy0}`);
+    // Shockwave ring — pulses outward at the moment of emergence
+    const burst = panel.append("ellipse")
+      .attr("class", "col-burst")
+      .attr("cx", cx + dx / 2).attr("cy", groundY)
+      .attr("rx", colW * 0.35).attr("ry", colW * 0.18)
+      .attr("fill", "none")
+      .attr("stroke", topColor)
+      .attr("stroke-width", 1.6)
+      .style("opacity", 0);
 
-    // Top face (starts flat at base)
-    const top = g.append("polygon")
-      .attr("class", "col-top")
-      .attr("fill", topColor)
-      .attr("points", `${x1},${cy0} ${x2},${cy0} ${x2 + dx},${cy0 - dy} ${x1 + dx},${cy0 - dy}`);
-
-    // Front face (starts at height 0)
-    const front = g.append("rect")
-      .attr("class", "col-front")
-      .attr("fill", site.color)
-      .attr("x", x1).attr("y", cy0)
-      .attr("width", colW).attr("height", 0);
-
-    // Year label below the column base
-    g.append("text")
+    // Year label just above the dot, below the chart base
+    const yearLbl = panel.append("text")
       .attr("class", "col-year")
-      .attr("x", cx).attr("y", cy0 + 15)
+      .attr("data-year", year)
+      .attr("x", cx).attr("y", groundY + 12)
       .attr("text-anchor", "middle")
       .attr("fill", "#aaa")
       .attr("stroke", "#000")
@@ -330,10 +384,11 @@ function showColumns(site) {
       .style("opacity", 0)
       .text(year);
 
-    // Value label — positioned above the full-grown top
-    g.append("text")
+    // Value label — sits above the column top
+    const valueLbl = panel.append("text")
       .attr("class", "col-value")
-      .attr("x", cx + dx / 2).attr("y", cy0 - 6)
+      .attr("data-year", year)
+      .attr("x", cx + dx / 2).attr("y", groundY - fullH - dy - 6)
       .attr("text-anchor", "middle")
       .attr("fill", "#ccc")
       .attr("stroke", "#000")
@@ -345,51 +400,37 @@ function showColumns(site) {
       .style("opacity", 0)
       .text(formatVisits(visits));
 
-    // Staggered grow-up animation
-    const delay = 60 + i * 55;
-    const dur = 650;
-    const ease = d3.easeCubicOut;
+    // ── Staggered emergence animation ──
+    const delay = 80 + i * 70;
+    const dur = 720;
 
-    front.transition().delay(delay).duration(dur).ease(ease)
-      .attr("y", cy0 - fullH)
-      .attr("height", fullH);
+    // Bar rises from below ground with a satisfying overshoot ("pop")
+    g.transition().delay(delay).duration(dur)
+      .ease(d3.easeBackOut.overshoot(1.25))
+      .attr("transform", "translate(0, 0)");
 
-    top.transition().delay(delay).duration(dur).ease(ease)
-      .attrTween("points", () => {
-        const iH = d3.interpolateNumber(0, fullH);
-        return (t) => {
-          const h = iH(t);
-          const ty = cy0 - h;
-          return `${x1},${ty} ${x2},${ty} ${x2 + dx},${ty - dy} ${x1 + dx},${ty - dy}`;
-        };
-      });
+    // Shockwave: ring expands and fades right as the bar punches through
+    burst.transition().delay(delay).duration(380).ease(d3.easeCubicOut)
+      .attr("rx", colW * 1.6).attr("ry", (dy + 4) * 1.6)
+      .style("opacity", 0.75)
+      .transition().duration(260).ease(d3.easeCubicOut)
+      .style("opacity", 0)
+      .remove();
 
-    right.transition().delay(delay).duration(dur).ease(ease)
-      .attrTween("points", () => {
-        const iH = d3.interpolateNumber(0, fullH);
-        return (t) => {
-          const h = iH(t);
-          const ty = cy0 - h;
-          return `${x2},${cy0} ${x2 + dx},${cy0 - dy} ${x2 + dx},${ty - dy} ${x2},${ty}`;
-        };
-      });
-
-    g.select(".col-shadow")
-      .transition().delay(delay).duration(dur).style("opacity", 1);
-
-    g.select(".col-year")
-      .transition().delay(delay + 200).duration(400).style("opacity", 1);
-
-    g.select(".col-value")
-      .transition().delay(delay).duration(dur).ease(ease)
-      .attr("y", cy0 - fullH - dy - 6)
+    // Shadow grows in slightly after impact
+    shadow.transition().delay(delay + 160).duration(420)
       .style("opacity", 1);
+
+    // Labels fade in once the bar is settled
+    yearLbl.transition().delay(delay + 320).duration(360).style("opacity", 1);
+    valueLbl.transition().delay(delay + 380).duration(360).style("opacity", 1);
   });
 
   updateActiveYear(+slider.value);
 }
 
 function updateActiveYear(year) {
+  // Highlight the active 3D bar
   columnsGroup.selectAll(".columns-panel .column")
     .each(function () {
       const g = d3.select(this);
@@ -397,11 +438,21 @@ function updateActiveYear(year) {
       g.select(".col-front").attr("opacity", isActive ? 1 : 0.45);
       g.select(".col-top").attr("opacity", isActive ? 1 : 0.45);
       g.select(".col-right").attr("opacity", isActive ? 1 : 0.45);
-      g.select(".col-year")
-        .attr("fill", isActive ? "#fff" : "#666")
+    });
+  // Highlight the matching year label
+  columnsGroup.selectAll(".columns-panel .col-year")
+    .each(function () {
+      const t = d3.select(this);
+      const isActive = +t.attr("data-year") === year;
+      t.attr("fill", isActive ? "#fff" : "#666")
         .style("font-weight", isActive ? 700 : 500);
-      g.select(".col-value")
-        .attr("fill", isActive ? "#fff" : "#777")
+    });
+  // Highlight the matching value label
+  columnsGroup.selectAll(".columns-panel .col-value")
+    .each(function () {
+      const t = d3.select(this);
+      const isActive = +t.attr("data-year") === year;
+      t.attr("fill", isActive ? "#fff" : "#777")
         .style("font-size", isActive ? "11px" : "9.5px")
         .style("font-weight", isActive ? 700 : 500);
     });
@@ -536,14 +587,25 @@ function handleLeave() {
 const slider = document.getElementById("year-slider");
 const yearLabel = document.getElementById("slider-year-label");
 
+// COVID-19 banner: visible from 2020 through 2022 (pandemic years)
+const covidBanner = document.getElementById("covid-banner");
+function updateCovidBanner(year) {
+  if (!covidBanner) return;
+  covidBanner.classList.toggle("hidden", year < 2020 || year > 2022);
+}
+
 slider.addEventListener("input", () => {
   const year = +slider.value;
   yearLabel.textContent = year;
   drawSites(year);
   updateVisitsList(year);
   renderTooltip();
+  updateCovidBanner(year);
   if (currentZoomed) updateActiveYear(year);
 });
+
+// Initial state
+updateCovidBanner(+slider.value);
 
 // ── Visits list (legend under the map) ──
 const visitsList = document.getElementById("visits-list");

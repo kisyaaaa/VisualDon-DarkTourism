@@ -193,8 +193,9 @@
   </div>
 
   <!-- Timeline + Visits (MapLibre bubbles, end of page) -->
-  <section id="visits-section">
-    <h2 class="visits-title">Visits over the years</h2>
+  <div class="pin-spacer pin-spacer--visits">
+    <section id="visits-section" class="pinned-page">
+      <h2 class="visits-title">Visits over the years</h2>
     <p class="visits-subtitle">Move the slider to see how visitor numbers evolved from 2016 to 2026.</p>
     <div id="timeline-container">
       <div id="timeline-map"></div>
@@ -202,6 +203,13 @@
       <div id="timeline-zoom-controls">
         <button id="timeline-zoom-in" type="button" aria-label="Zoom in">+</button>
         <button id="timeline-zoom-out" type="button" aria-label="Zoom out">&minus;</button>
+      </div>
+      <div id="covid-banner" class="hidden" aria-hidden="true">
+        <span class="covid-icon">&#9763;</span>
+        <div class="covid-text">
+          <span class="covid-title">COVID-19</span>
+          <span class="covid-sub">Global travel restrictions caused a historic collapse of dark tourism visits.</span>
+        </div>
       </div>
     </div>
     <div id="slider-wrapper">
@@ -215,8 +223,28 @@
       </div>
       <div id="slider-ticks"></div>
     </div>
-    <div id="visits-list"></div>
-  </section>
+      <div id="visits-list"></div>
+    </section>
+  </div>
+
+  <!-- Conclusion section (pinned, scroll-revealed) -->
+  <div class="pin-spacer pin-spacer--conclusion">
+    <section id="conclusion-section" class="pinned-page">
+      <div class="conclusion-content">
+        <h2 class="conclusion-title conclusion-stage" data-stage="1">
+          Everyone has their own definition of dark tourism.
+        </h2>
+        <p class="conclusion-lead conclusion-stage" data-stage="2">
+          Where some see remembrance, others see voyeurism. Where some find education,
+          others find spectacle. The line between bearing witness and consuming tragedy
+          is yours alone to draw.
+        </p>
+        <p class="conclusion-quote conclusion-stage" data-stage="3">
+          &ldquo;So&hellip; what is dark tourism, to you?&rdquo;
+        </p>
+      </div>
+    </section>
+  </div>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://unpkg.com/topojson-client@3"></script>

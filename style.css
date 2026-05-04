@@ -121,6 +121,14 @@ body {
   height: 300vh;
 }
 
+.pin-spacer--visits {
+  height: 400vh;
+}
+
+.pin-spacer--conclusion {
+  height: 450vh;
+}
+
 
 .pinned-page {
   position: sticky;
@@ -536,6 +544,69 @@ body {
   transform: scale(0.95);
 }
 
+/* COVID-19 banner (shown only when slider year = 2020) */
+#covid-banner {
+  position: absolute;
+  top: 1.4rem;
+  left: 1.4rem;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  max-width: 320px;
+  background: rgba(120, 20, 20, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 90, 90, 0.45);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #ffe5e5;
+  box-shadow: 0 0 20px rgba(231, 76, 60, 0.25);
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+  animation: covid-pulse 2.4s ease-in-out infinite;
+}
+
+#covid-banner.hidden {
+  opacity: 0;
+  transform: translateX(-12px);
+}
+
+.covid-icon {
+  font-size: 1.6rem;
+  color: #ff6b6b;
+  text-shadow: 0 0 10px rgba(255, 80, 80, 0.6);
+  flex-shrink: 0;
+}
+
+.covid-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.covid-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ff8e8e;
+}
+
+.covid-sub {
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.35;
+  color: #f5d5d5;
+}
+
+@keyframes covid-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(231, 76, 60, 0.25); }
+  50%      { box-shadow: 0 0 28px rgba(231, 76, 60, 0.55); }
+}
+
 /* Tooltip */
 #timeline-tooltip {
   position: absolute;
@@ -701,7 +772,8 @@ body {
 
 /* ── Visits section (timeline map + visits list, end of page) ── */
 #visits-section {
-  position: relative;
+  position: sticky;
+  top: 0;
   background: #0d0d0d;
   height: 100vh;
   width: 100%;
@@ -1079,6 +1151,67 @@ body {
   border: 2px dashed #fff;
 }
 
+/* ── Conclusion section (pinned full-page) ── */
+#conclusion-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #141414 0%, #050505 75%);
+  padding: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.conclusion-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+/* Each stage is hidden by default — revealed by scroll progress */
+.conclusion-stage {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
+}
+
+.conclusion-stage.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.conclusion-title {
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  color: #f0f0f0;
+  margin: 0;
+  text-shadow: 0 0 32px rgba(150, 51, 186, 0.28);
+}
+
+.conclusion-lead {
+  font-size: 1.1rem;
+  line-height: 1.85;
+  color: #a8a8a8;
+  max-width: 720px;
+  margin: 0;
+}
+
+.conclusion-quote {
+  font-size: 1.7rem;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: #ddd;
+  margin: 1rem 0 0;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .hero-title {
@@ -1107,5 +1240,17 @@ body {
   .reveal-sm {
     width: 40vw;
     height: 25vh;
+  }
+
+  #conclusion-section {
+    padding: 4rem 1.2rem 3.5rem;
+  }
+
+  .conclusion-title {
+    font-size: 1.8rem;
+  }
+
+  .conclusion-quote {
+    font-size: 1.2rem;
   }
 }

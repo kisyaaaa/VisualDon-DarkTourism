@@ -106,7 +106,27 @@ function onScroll() {
       return;
     }
 
+    // Conclusion: reveal each stage sequentially
+    if (spacer.classList.contains('pin-spacer--conclusion')) {
+      updateConclusion(spacer, progress);
+      return;
+    }
+
     // Hero: handled by CSS only (already visible)
+  });
+}
+
+function updateConclusion(spacer, progress) {
+  const stages = spacer.querySelectorAll('.conclusion-stage');
+  // Each stage appears at its threshold; final pause keeps everything visible
+  const thresholds = [0.08, 0.30, 0.55];
+  stages.forEach((el, i) => {
+    const threshold = thresholds[i] !== undefined ? thresholds[i] : 1;
+    if (progress > threshold) {
+      el.classList.add('visible');
+    } else {
+      el.classList.remove('visible');
+    }
   });
 }
 
