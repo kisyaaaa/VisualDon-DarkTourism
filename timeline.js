@@ -45,7 +45,7 @@ const sitesData = [
     }
   },
   {
-    name: "Catacombes de Paris",
+    name: "Paris Catacombs",
     coords: [2.3322, 48.8339],
     color: "#9b59b6",
     visits: {
@@ -85,7 +85,7 @@ const sitesData = [
     }
   },
   {
-    name: "Capucins",
+    name: "Capuchins",
     coords: [13.3388, 38.1147],
     color: "#e84393",
     visits: {

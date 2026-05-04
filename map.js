@@ -84,8 +84,8 @@ const markerLocations = [
   { name: "Syria",                coords: [36.710772, 34.743585],   color: "#fd79a8" },
   { name: "Human Safari",         coords: [18.408751, 43.849402],   color: "#1abc9c" },
   { name: "Chernobyl",            coords: [30.099098, 51.389372],   color: "#2ecc71" },
-  { name: "Capucins",             coords: [13.3388, 38.1147],       color: "#e84393" },
-  { name: "Catacombes de Paris",  coords: [2.332424, 48.833881],    color: "#9b59b6" }
+  { name: "Capuchins",            coords: [13.3388, 38.1147],       color: "#e84393" },
+  { name: "Paris Catacombs",      coords: [2.332424, 48.833881],    color: "#9b59b6" }
 ];
 
 // ══════════════════════════════════════════════════

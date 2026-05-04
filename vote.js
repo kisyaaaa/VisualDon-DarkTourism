@@ -3,12 +3,12 @@ const places = [
   { name: "Pompeii",                   csvKey: "Pompei",                                  color: "#e67e22" },
   { name: "Chernobyl",                 csvKey: "Tchernobyl",                              color: "#2ecc71" },
   { name: "Auschwitz-Birkenau",        csvKey: "Auschwitz-Birkenau",                      color: "#e74c3c" },
-  { name: "Catacombes de Paris",       csvKey: "Catacombes de Paris",                     color: "#9b59b6" },
+  { name: "Paris Catacombs",           csvKey: "Catacombes de Paris",                     color: "#9b59b6" },
   { name: "Fukushima",                 csvKey: "Fukushima",                               color: "#3498db" },
   { name: "Ground Zero",              csvKey: "11 Septembre Memorial - Ground Zero",     color: "#f1c40f" },
   { name: "Human Safari Sarajevo",    csvKey: "Human Safari de Sarajevo",                color: "#1abc9c" },
-  { name: "Catacombes des Capucins",   csvKey: "Catacombes des Capucins",                 color: "#e84393" },
-  { name: "Tourisme de guerre Syrie",  csvKey: "Tourisme de guerre - Syrie",              color: "#fd79a8" }
+  { name: "Capuchin Catacombs",        csvKey: "Catacombes des Capucins",                 color: "#e84393" },
+  { name: "Syria War Tourism",         csvKey: "Tourisme de guerre - Syrie",              color: "#fd79a8" }
 ];
 
 // ── Dimensions ──
