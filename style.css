@@ -1133,6 +1133,21 @@ body {
   margin-top: 0.75rem;
 }
 
+.compare-source {
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  color: #666;
+  letter-spacing: 0.02em;
+  text-align: center;
+  max-width: 520px;
+  line-height: 1.55;
+}
+
+.compare-source strong {
+  color: #aaa;
+  font-weight: 600;
+}
+
 .legend-item {
   display: flex;
   align-items: center;
