@@ -147,30 +147,32 @@
   ### 1. Fukushima (Mémorial et zone de Namie/Futaba)
   *Focus sur la zone de reconstruction et de mémoire.*
 
+  *Avertissement : nos chiffres correspondent à un périmètre élargi (Mémorial de Futaba + zone touristique de Namie + circuits Hope Tourism + visites scolaires + flux côtier). Les sources officielles ne publient pas de statistique agrégée annuelle sur ce périmètre — elles donnent soit le **Mémorial Futaba** (≈350 000 visiteurs cumulés depuis sept. 2020 selon FIPO), soit le programme **Hope Tourism** (~17 800/an en FY2022 selon japan.go.jp). Les valeurs ci-dessous sont donc des **estimations d'auteur** sauf mention contraire.*
+
   | Année | Visiteurs (Est.) | Source / Lien | Commentaire |
   | :--- | :--- | :--- | :--- |
-  | **2015-16** | ~0 | [Fukushima Pref.](https://www.pref.fukushima.lg.jp/sec/32031a/kanko-koryu3.html) | Zone encore sous ordre d'évacuation total. |
-  | **2017-18** | 152 000 | [Namie Town](https://www.town.namie.fukushima.jp/) | Réouverture partielle de Namie. |
-  | **2019** | 210 000 | [Fukushima Stats](https://www.pref.fukushima.lg.jp/sec/32031a/kanko-koryu3.html) | Pic d'intérêt avant la pandémie. |
-  | **2020** | 40 000 | [FIPO Memorial](https://www.fipo.or.jp/memorial/en) | Ouverture du Mémorial de Futaba en sept. 2020. |
-  | **2021** | 110 000 | [Ukedo School](https://www.town.namie.fukushima.jp/) | Impact COVID compensé par l'ouverture d'Ukedo. |
-  | **2022** | 250 000 | [Hope Tourism](https://www.pref.fukushima.lg.jp/) | Levée des restrictions à Futaba. |
-  | **2023** | 427 000 | [Kyodo News](https://english.kyodonews.net/) | Explosion du tourisme scolaire et international. |
-  | **2024** | 465 000 | [Fukushima Gov](https://www.pref.fukushima.lg.jp/) | Chiffre record pour la zone côtière. |
-  | **2025** | **~510 000** | [Projection 2026](https://www.pref.fukushima.lg.jp/) | Estimation basée sur la croissance du Hope Tourism. |
+  | **2015-16** | ~0 | Estimation auteur — agrégation de sources | Zone encore sous ordre d'évacuation total. |
+  | **2017-18** | 152 000 | Estimation auteur — agrégation de sources | Réouverture partielle de Namie ; chiffre non confirmé par source officielle. |
+  | **2019** | 210 000 | Estimation auteur — agrégation de sources | Pic d'intérêt avant la pandémie. |
+  | **2020** | 40 000 | [Mémorial de Futaba (FIPO)](https://www.fipo.or.jp/lore/) | Mémorial ouvert le 20 septembre 2020 — ordre de grandeur cohérent. |
+  | **2021** | 110 000 | Estimation auteur — agrégation de sources | Impact COVID compensé par l'ouverture d'Ukedo Elementary School. |
+  | **2022** | 250 000 | [FIPO — annonce 300 000 visiteurs cumulés (juillet 2024)](https://www.fipo.or.jp/lore/archives/6221) | FIPO annonce 300 000 cumulés au 6 juillet 2024 ; notre chiffre annuel est une estimation déduite. |
+  | **2023** | 427 000 | Estimation auteur — agrégation de sources | Source officielle parle de 350 000 cumulés au Mémorial en février 2025 — notre chiffre élargit au Hope Tourism et au tourisme scolaire. |
+  | **2024** | 465 000 | [Hope Tourism — gouvernement du Japon](https://www.japan.go.jp/kizuna/2023/11/fukushimas_hope_tourism.html) | Hope Tourism = ~17 800 visiteurs en FY2022 ; notre chiffre couvre un périmètre beaucoup plus large. |
+  | **2025** | **~510 000** | Estimation auteur — agrégation de sources | Projection basée sur la croissance du Hope Tourism, sans rapport officiel. |
 
   ---
 
-  ### 2. Sarajevo « Human Safari » (Participants estimés)
-  *Note : Chiffres liés aux enquêtes criminelles sur les tireurs étrangers.*
+  ### 2. Sarajevo « Human Safari » (chronologie judiciaire)
+  *Note : aucune statistique de fréquentation publique n'existe — par nature les faits sont clandestins. La colonne `Sarajevo_Human_Safari` du CSV reste à 0 (voir biais en section 1.a). Les lignes ci-dessous suivent la chronologie judiciaire et médiatique, pas un nombre de visiteurs.*
 
   | Année | Événement | Source / Lien | Commentaire |
   | :--- | :--- | :--- | :--- |
-  | **2015-21** | Néant | [ICTY Archives](https://www.icty.org/) | Faits traités comme des rumeurs de guerre. |
-  | **2022** | Révélation | [Al Jazeera](https://balkans.aljazeera.net/) | Sortie du film provoquant l'ouverture d'enquêtes. |
-  | **2023** | Procédure | [Balkan Insight](https://balkaninsight.com/) | Identification des premiers témoins clés. |
-  | **2024** | Instruction | [Reuters](https://www.reuters.com/) | Le parquet de Milan saisit des documents de 1993. |
-  | **2025** | **~230 suspects** | [El Pais](https://english.elpais.com/) | Estimation du nombre de « tireurs » étrangers impliqués. |
+  | **2015-21** | Aucune procédure publique | Estimation auteur — agrégation de sources | Faits traités comme des rumeurs de guerre, non documentés statistiquement. |
+  | **2022** | Sortie du documentaire *Sarajevo Safari* | [Wikipédia — *Sarajevo Safari* (film)](https://en.wikipedia.org/wiki/Sarajevo_Safari_(film)) | Première au AJB DOC Festival (sept. 2022) ; plainte pénale déposée en Bosnie. |
+  | **2023** | Ouverture d'enquêtes | [Wikipédia — *Sarajevo Safari* (chronologie)](https://en.wikipedia.org/wiki/Sarajevo_Safari) | Janvier 2023 : le journaliste Edin Karić complète sa plainte. |
+  | **2024** | Instruction | Estimation auteur — agrégation de sources | Aucune action judiciaire publique majeure documentée pour 2024. |
+  | **2025** | Enquête du parquet de Milan | [Al Jazeera — *Italy probes Sarajevo sniper safaris* (nov. 2025)](https://www.aljazeera.com/news/2025/11/13/italy-probes-sarajevo-sniper-safaris-what-were-they-who-was-involved) | Cinq personnes identifiées par Gavazzeni ; un suspect interrogé en février 2026. **Le chiffre de « 230 suspects » initialement avancé n'a pas pu être confirmé dans les sources consultées.** |
 
   ---
 
@@ -179,41 +181,49 @@
 
   | Année | Visiteurs | Source / Lien | Commentaire |
   | :--- | :--- | :--- | :--- |
-  | **2015-16** | ~500 000 | [SANA News](https://sana.sy/en/) | Majorité de pèlerins religieux (Irakiens/Iraniens). |
-  | **2017-18** | 1,7 million | [Reuters](https://www.reuters.com/) | Reprise post-libération d'Alep. |
-  | **2019** | 2,5 millions | [Syrian Guides](https://syrianguides.com/) | Record de touristes occidentaux (aventuriers). |
-  | **2020-21** | ~900 000 | [Ministry Tourism](https://sana.sy/fr/) | Chute drastique due au COVID-19. |
-  | **2022-23** | 2,1 millions | [Zawya](https://www.zawya.com/) | Normalisation et retour des circuits organisés. |
-  | **2024** | 3,01 millions | [Al Arabiya](https://english.alarabiya.net/) | Reprise forte du tourisme culturel (Alep/Palmyre). |
-  | **2025** | **~4,0 millions** | [Ministry 2026](https://sana.sy/fr/) | Estimation officielle (croissance de 80% des étrangers). |
+  | **2015-16** | ~500 000 | Estimation auteur — agrégation de sources | Sources tierces (Wikipedia *Tourism in Syria*) donnent ~170 000 en 2015 ; notre chiffre inclut largement les pèlerinages religieux (Irakiens/Iraniens), périmètre élargi. |
+  | **2017-18** | 1,7 million | Estimation auteur — agrégation de sources | Reprise post-libération d'Alep ; chiffre repris de la presse économique sans rapport public retrouvé. |
+  | **2019** | 2,5 millions | [Syrian Guides — *Tourism Revival in Numbers*](https://syrianguides.com/travel-to-syria-tourism-revival-in-numbers/) | « Syria welcomed approximately 2.5 million tourists » en 2019. |
+  | **2020-21** | ~900 000 | Estimation auteur — agrégation de sources | Chute drastique due au COVID-19 ; impact qualitatif documenté sans chiffre officiel précis. |
+  | **2022-23** | 2,1 millions | [Syrian Guides — *Tourism Revival in Numbers*](https://syrianguides.com/travel-to-syria-tourism-revival-in-numbers/) | « 1,5 million projected end-2022, 727 000 first 5 months 2023 ». |
+  | **2024** | 3,01 millions | [Arab News — *Syria's tourism surges 80%*](https://www.arabnews.com/node/2630946/business-economy) | ~3,02 M jan-nov 2024 (déduit de la hausse de +18% à 3,56 M en 2025). |
+  | **2025** | **~4,0 millions** | [SANA — *Over 3.5 million visitors to Syria*](https://sana.sy/en/tour-syria/2292962/) | SANA officiel : « More than 3.5 million Arab and foreign tourists since liberation through end Nov 2025 » — projection annuelle ~4 M. |
 
   ---
 
   ### 4. Catacombes des Capucins (Palerme, Italie)
 
+  *Avertissement : le site est géré par l'ordre franciscain et **ne publie pas de statistique annuelle de fréquentation**. Il est absent des bases ISTAT et du Ministero della Cultura italien (qui ne recensent que les sites publics). Toutes les valeurs ci-dessous sont donc des **estimations d'auteur**, déduites de chiffres globaux du tourisme palermitain et de mentions dans la presse locale.*
+
   | Année | Visiteurs | Source / Lien | Commentaire |
   | :--- | :--- | :--- | :--- |
-  | **2015-18** | ~240 000 | [Comune Palermo](https://www.comune.palermo.it/) | Croissance stable des croisiéristes. |
-  | **2019** | 310 000 | [ISTAT Sicilia](https://www.istat.it/) | Année de référence avant pandémie. |
-  | **2020-21** | ~75 000 | [Osservatorio Turismo](https://pti.regione.sicilia.it/) | Fermetures répétées et jauges strictes. |
-  | **2022** | 240 000 | [Palermo Today](https://www.palermotoday.it/) | Retour au niveau de 2015. |
-  | **2023** | 320 000 | [ISTAT](https://www.istat.it/it/sicilia) | Record historique grâce au tourisme US/UK. |
-  | **2024** | 350 000 | [Sindaco Palermo](https://www.comune.palermo.it/) | Palerme dépasse les 2M de nuitées totales. |
-  | **2025** | **~380 000** | [Projection 2026](https://www.comune.palermo.it/) | Estimation basée sur +7,3% de flux touristique. |
+  | **2015-18** | ~240 000 | Estimation auteur — agrégation de sources | Aucune statistique publique pour le site ; chiffre extrapolé du tourisme palermitain global. |
+  | **2019** | 310 000 | Estimation auteur — agrégation de sources | Année de référence avant pandémie. |
+  | **2020-21** | ~75 000 | Estimation auteur — agrégation de sources | Fermetures répétées et jauges strictes. |
+  | **2022** | 240 000 | Estimation auteur — agrégation de sources | Retour estimé au niveau de 2015. |
+  | **2023** | 320 000 | Estimation auteur — agrégation de sources | Aucun chiffre site-spécifique publié par ISTAT. |
+  | **2024** | 350 000 | Estimation auteur — agrégation de sources | Palerme dépasse les 2 M de nuitées totales (donnée Comune, mais non ventilée par site). |
+  | **2025** | **~380 000** | Estimation auteur — agrégation de sources | Projection basée sur +7,3 % de flux touristique global à Palerme. |
 
   ---
 
   ### 5. Pompéi (Parc archéologique)
 
+  Source unique pour toutes les années : la page officielle [Pompeii Sites — Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) publie un tableau annuel complet.
+
   | Année | Visiteurs | Source / Lien | Commentaire |
   | :--- | :--- | :--- | :--- |
-  | **2015-18** | ~3,3 millions | [Pompeii Data](https://pompeiisites.org/en/) | Moyenne sur 4 ans (augmentation constante). |
-  | **2019** | 3 833 836 | [Pompeii Sites](https://pompeiisites.org/en/) | Sommet pré-COVID. |
-  | **2020-21** | ~850 000 | [MIC Italy](https://pompeiisites.org/en/) | Période de confinement national. |
-  | **2022** | 2 978 000 | [Pompeii Data](https://pompeiisites.org/en/) | Reprise robuste. |
-  | **2023** | 3 985 000 | [Pompeii Data](https://pompeiisites.org/en/) | Dépassement du record de 2019. |
-  | **2024** | 4 100 000 | [Pompeii Data](https://pompeiisites.org/en/) | Mise en place de quotas pour limiter la foule. |
-  | **2025** | **~4 250 000** | [Pompeii Data](https://pompeiisites.org/en/) | Estimation (gestion par billets nominatifs). |
+  | **2015** | 3 505 172 | [Pompeii Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) | Tableau officiel du parc. |
+  | **2016** | 3 769 803 | [Pompeii Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) | Tableau officiel du parc. |
+  | **2017** | 4 023 900 | [Pompeii Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) | Tableau officiel du parc. |
+  | **2018** | 3 768 164 | [Pompeii Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) | Tableau officiel du parc. |
+  | **2019** | 3 925 616 | [Pompeii Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) | Sommet pré-COVID (chiffre officiel). |
+  | **2020** | 594 823 | [Pompeii Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) | Période de confinement national. |
+  | **2021** | 1 036 380 | [Pompeii Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) | Réouverture progressive. |
+  | **2022** | 3 060 049 | [Pompeii Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) | Reprise robuste. |
+  | **2023** | 4 079 235 | [Pompeii Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) | Dépassement du record de 2019. |
+  | **2024** | 4 177 753 | [Pompeii Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) | Mise en place de quotas pour limiter la foule. |
+  | **2025** | **4 118 926** | [Pompeii Visitor Data](https://pompeiisites.org/en/archaeological-park-of-pompeii/visitor-data/) | Données 2025 telles que publiées par le parc (gestion par billets nominatifs). |
 
   ---
 
@@ -221,13 +231,17 @@
 
   | Année | Visiteurs | Source / Lien | Commentaire |
   | :--- | :--- | :--- | :--- |
-  | **2015-18** | ~2,0 millions | [Auschwitz Report](https://www.auschwitz.org/) | Stabilisation autour de 2M. |
-  | **2019** | 2 320 000 | [Auschwitz Report](https://www.auschwitz.org/) | Record absolu du musée. |
-  | **2020-21** | ~530 000 | [Auschwitz.org](https://www.auschwitz.org/) | Chute de 75% à cause des restrictions frontalières. |
-  | **2022** | 1 184 000 | [Auschwitz Report](https://www.auschwitz.org/) | Reprise lente, impact de la guerre en Ukraine voisine. |
-  | **2023** | 1 950 000 | [Auschwitz Report](https://www.auschwitz.org/) | Retour aux niveaux de 2015. |
-  | **2024** | 2 200 000 | [Auschwitz Report](https://www.auschwitz.org/) | Forte demande des groupes scolaires. |
-  | **2025** | **~2 400 000** | [Report 2025](https://www.auschwitz.org/download/gfx/auschwitz/en/defaultstronaopisowa/358/21/1/report_2025.pdf) | Projection basée sur les réservations anticipées. |
+  | **2015** | 1 720 000 | Estimation auteur — agrégation de sources | Annonce officielle annuelle non retrouvée en archive. |
+  | **2016** | 2 053 000 | Estimation auteur — agrégation de sources | Annonce officielle annuelle non retrouvée en archive. |
+  | **2017** | 2 100 000 | Estimation auteur — agrégation de sources | Année du 12e million cumulé depuis 1947. |
+  | **2018** | 2 152 000 | [Auschwitz.org — annonce 2018](https://www.auschwitz.org/en/museum/news/2-million-152-thousand-visitors-at-the-memorial-in-2018,1341.html) | « 2 million 152 thousand people from all over the world visited the Memorial » (chiffre officiel). |
+  | **2019** | 2 320 000 | [Auschwitz.org — annonce 2019](https://www.auschwitz.org/en/museum/news/2-million-320-thousand-visitors-at-the-auschwitz-memorial-in-2019,1400.html) | Record absolu pré-pandémie (chiffre officiel). |
+  | **2020** | 502 000 | [Auschwitz.org — annonce 2020](https://www.auschwitz.org/en/museum/news/exceptionally-difficult-year-502-000-visitors-at-the-auschwitz-memorial-in-2020-,1461.html) | « Exceptionally difficult year » : –78 % vs 2019 (chiffre officiel). |
+  | **2021** | 560 000 | Estimation auteur — agrégation de sources | Annonce officielle annuelle non retrouvée ; ordre de grandeur post-COVID. |
+  | **2022** | 1 184 000 | [Auschwitz.org — annonce 2022](https://www.auschwitz.org/en/museum/news/1-million-184-thousand-people-visited-the-memorial-in-2022,1595.html) | Reprise lente, guerre en Ukraine voisine (chiffre officiel). |
+  | **2023** | 1 670 000 | [Auschwitz.org — annonce 2023](https://www.auschwitz.org/en/museum/news/1-million-670-thousand-people-visited-the-memorial-in-2023,1663.html) | Chiffre officiel publié par le Mémorial. |
+  | **2024** | 1 830 000 | [Auschwitz.org — annonce 2024](https://www.auschwitz.org/en/museum/news/1-million-830-thousand-people-visited-the-memorial-in-2024,1738.html) | Chiffre officiel publié par le Mémorial. |
+  | **2025** | **1 950 000** | [Auschwitz.org — annonce 2025](https://www.auschwitz.org/en/museum/news/1-95-million-visitors-to-the-auschwitz-memorial-and-museum-in-2025,1812.html) | Chiffre officiel publié par le Mémorial. |
 
   ---
 
@@ -235,26 +249,35 @@
 
   | Année | Visiteurs | Source / Lien | Commentaire |
   | :--- | :--- | :--- | :--- |
-  | **2015-18** | ~45 000 | [DAZV Ukraine](https://www.kmu.gov.ua/) | Moyenne avant l'effet de la série HBO. |
-  | **2019** | 124 415 | [DAZV Report](https://www.kmu.gov.ua/) | Pic historique (effet série Chernobyl). |
-  | **2020-21** | ~55 000 | [DAZV Ukraine](https://www.kmu.gov.ua/) | Impact combiné COVID et incendies de forêt. |
-  | **2022-23** | < 5 000 | [Zvit DAZV 2024](https://www.kmu.gov.ua/storage/app/sites/1/17-civik-2018/zvit_2024/zvit_DAZV_2024.pdf) | Invasion russe et suspension du tourisme. |
-  | **2024** | ~12 000 | [DAZV Ukraine](https://www.kmu.gov.ua/) | Réouverture très limitée pour missions spécifiques. |
-  | **2025** | **~18 000** | [Projection 2025](https://www.kmu.gov.ua/) | Estimation de reprise graduelle. |
+  | **2015-16** | ~16 000 / ~35 000 | Estimation auteur — agrégation de sources | Données partielles avant que la State Agency (DAZV) publie une statistique annuelle stable. |
+  | **2017** | 46 136 | [Statista — Chernobyl Exclusion Zone tourists](https://www.statista.com/statistics/1231428/number-of-tourists-in-chernobyl-exclusion-zone/) | Compilation Statista basée sur DAZV. |
+  | **2018** | 71 869 | [Statista — Chernobyl Exclusion Zone tourists](https://www.statista.com/statistics/1231428/number-of-tourists-in-chernobyl-exclusion-zone/) | Compilation Statista basée sur DAZV. |
+  | **2019** | 124 423 | [Statista — Chernobyl Exclusion Zone tourists](https://www.statista.com/statistics/1231428/number-of-tourists-in-chernobyl-exclusion-zone/) | Pic historique (effet série HBO *Chernobyl*). |
+  | **2020** | 36 450 | [Statista — Chernobyl Exclusion Zone tourists](https://www.statista.com/statistics/1231428/number-of-tourists-in-chernobyl-exclusion-zone/) | Impact combiné COVID et incendies de forêt. |
+  | **2021** | 73 086 | [Statista — Chernobyl Exclusion Zone tourists](https://www.statista.com/statistics/1231428/number-of-tourists-in-chernobyl-exclusion-zone/) | Reprise partielle. |
+  | **2022-23** | < 5 000 | [Zvit DAZV 2024 (PDF)](https://www.kmu.gov.ua/storage/app/sites/1/17-civik-2018/zvit_2024/zvit_DAZV_2024.pdf) | Invasion russe : suspension complète du tourisme dans la zone. |
+  | **2024** | ~12 000 | Estimation auteur — agrégation de sources | Réouverture très limitée pour missions spécifiques ; pas de chiffre DAZV public. |
+  | **2025** | **~18 000** | Estimation auteur — agrégation de sources | Projection de reprise graduelle, non confirmée par DAZV. |
 
   ---
 
   ### 8. 9/11 Memorial (Ground Zero, NY)
 
+  *Note de périmètre : le site comprend le **Memorial Plaza** (extérieur, gratuit, ~10 millions de visiteurs/an typique) et le **Memorial Museum** (payant, ~3 millions/an typique). Notre CSV `Ground_Zero_NYC` agrège les deux ; les chiffres ci-dessous correspondent au périmètre combiné quand la source le précise, sinon au seul Plaza.*
+
   | Année | Visiteurs | Source / Lien | Commentaire |
   | :--- | :--- | :--- | :--- |
-  | **2015-18** | ~3,1 millions | [911 Memorial](https://www.911memorial.org/) | Données stables pour le musée. |
-  | **2019** | 3 250 000 | [Annual Report](https://www.911memorial.org/) | Année record pré-pandémie. |
-  | **2020-21** | ~800 000 | [911 Memorial](https://www.911memorial.org/) | New York à l'arrêt complet pendant la pandémie. |
-  | **2022** | 1 900 000 | [911 Memorial](https://www.911memorial.org/) | Retour du tourisme domestique américain. |
-  | **2023** | 2 800 000 | [911 Memorial](https://www.911memorial.org/) | Reprise massive du tourisme international. |
-  | **2024** | 3 150 000 | [911 Memorial](https://www.911memorial.org/) | Quasi-retour au niveau de 2019. |
-  | **2025** | **~3 400 000** | [Report 2025](https://www.911memorial.org/2025-annual-report) | Nouveau record estimé. |
+  | **2015** | 8 500 000 | Estimation auteur — agrégation de sources | Chiffre combiné Plaza + Musée ; pas de rapport annuel public détaillé pour cette année. |
+  | **2016** | 6 500 000 | Estimation auteur — agrégation de sources | Idem. |
+  | **2017** | 6 800 000 | Estimation auteur — agrégation de sources | Idem. |
+  | **2018** | 6 600 000 | [9/11 Memorial — bilan 2018 (blog officiel)](https://www.911memorial.org/connect/blog/reflecting-2018-see-911-memorial-museums-year-review) | Le blog officiel confirme « 3.1 million visitors » pour le Musée seul ; le total Plaza + Musée est extrapolé. |
+  | **2019** | 6 300 000 | Estimation auteur — agrégation de sources | Année record pré-pandémie ; pas de chiffre combiné officiel retrouvé. |
+  | **2020** | 3 000 000 | Estimation auteur — agrégation de sources | New York à l'arrêt ; Musée fermé mars-sept. 2020. |
+  | **2021** | 3 500 000 | [9/11 Memorial — Rapport annuel 2021](https://www.911memorial.org/2021-annual-report) | Capacité limitée à 25 % pendant une grande partie de l'année. |
+  | **2022** | 3 500 000 | [9/11 Memorial — Rapport annuel 2022](https://www.911memorial.org/2022-annual-report) | Retour du tourisme domestique américain. |
+  | **2023** | 11 000 000 | [9/11 Memorial — Rapport annuel 2023](https://www.911memorial.org/2023-annual-report) | Rapport mentionne 2 265 000 pour le Musée ; total Plaza + Musée beaucoup plus élevé. |
+  | **2024** | 11 600 000 | [9/11 Memorial — Rapport annuel 2024](https://www.911memorial.org/2024-annual-report) | Rapport sépare 11,6 M (Memorial) + 2,4 M (Museum) — chiffre Memorial officiel. |
+  | **2025** | **11 300 000** | [9/11 Memorial — Rapport annuel 2025](https://www.911memorial.org/2025-annual-report) | Estimation tirée du rapport annuel 2025 (à confirmer une fois la version finale en ligne). |
 
   ---
 
@@ -262,14 +285,14 @@
 
   | Année | Visiteurs | Source / Lien | Commentaire |
   | :--- | :--- | :--- | :--- |
-  | **2015** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2015. |
-  | **2016** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2016. |
-  | **2017** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2017. |
-  | **2018** | 550 000 | [Catacombes de Paris](https://catacombes.paris.fr/) — informations pratiques + PDF du conseil d'arrondissement 14e | Le site officiel indique « près de 550 000 visiteurs par an » et un document municipal de 2018 mentionne 550 000 visiteurs annuels. |
-  | **2019** | 601 900 | [Paris Musées / Assises du tourisme durable](https://events.parisinfo.com/) | Chiffre visible dans un tableau de fréquentation culturelle à Paris : Catacombes de Paris, 601 900. |
-  | **2020** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2020. |
-  | **2021** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2021. |
-  | **2022** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2022. |
-  | **2023** | 607 730 | [Ville de Paris — fréquentation 2024](https://www.paris.fr/) | La Ville de Paris indique 607 730 visiteurs en 2024, « stable par rapport à 2023 ». |
-  | **2024** | 607 730 | [Ville de Paris — fréquentation 2024](https://www.paris.fr/) | Chiffre officiel publié par la Ville de Paris. |
-  | **2025** | **~600 000** | [Communiqué Catacombes 2025 PDF](https://catacombes.paris.fr/) + [Paris.fr — fréquentation 2025](https://www.paris.fr/) | Le communiqué officiel parle de « 600 000 visiteurs chaque année », mais les Catacombes ont été fermées à partir du 3 novembre 2025 pour travaux : ce chiffre est un ordre de grandeur, pas le réalisé exact 2025. |
+  | **2015** | 505 085 | [Wikipédia — Catacombes de Paris, tableau de fréquentation](https://fr.wikipedia.org/wiki/Catacombes_de_Paris#Fréquentation) | Données reprises de Paris Musées (Wikipédia compile les bilans annuels). |
+  | **2016** | 512 284 | [Wikipédia — Catacombes de Paris, tableau de fréquentation](https://fr.wikipedia.org/wiki/Catacombes_de_Paris#Fréquentation) | Données reprises de Paris Musées. |
+  | **2017** | 537 935 | [Wikipédia — Catacombes de Paris, tableau de fréquentation](https://fr.wikipedia.org/wiki/Catacombes_de_Paris#Fréquentation) | Données reprises de Paris Musées. |
+  | **2018** | 480 000 | [Paris Musées — Bilan fréquentation 2018](https://www.parismusees.paris.fr/en/news/attendance-in-2018-three-million-visitors-to-city-of-paris-museums) | « The Paris Catacombs acquired a new entrance and welcomed 480,000 visitors » (chiffre officiel). |
+  | **2019** | 601 900 | Estimation auteur — agrégation de sources | Chiffre repris d'un tableau Assises du tourisme durable ; document source non retrouvé en ligne. |
+  | **2020** | N/D | Estimation auteur — agrégation de sources | Bilan annuel non publié séparément (COVID). |
+  | **2021** | N/D | Estimation auteur — agrégation de sources | Bilan annuel non publié séparément (COVID). |
+  | **2022** | N/D | Estimation auteur — agrégation de sources | Bilan annuel non publié séparément. |
+  | **2023** | 603 684 | [Paris Musées — Communiqué fréquentation 2023](https://www.tendancehotellerie.fr/articles-breves/communique-de-presse/20893-article/5-300-879-visiteurs-accueillis-en-2023-dans-les-sites-et-musees-de-la-ville-de-paris-17-par-rapport-a-2022) | « CATACOMBES DE PARIS · 01/01/2023 · 31/12/2023 · 603 684 » (communiqué Paris Musées). |
+  | **2024** | 607 730 | [Paris Musées — Bilan fréquentation 2024](https://presseagence.fr/paris-4-848-944-visiteurs-accueillis-dans-les-sites-et-musees-de-la-ville-de-paris-en-2024/) | « Les Catacombes ont attiré 607 730 visiteurs, un chiffre stable par rapport à 2023 ». |
+  | **2025** | **~600 000** | [Franceinfo — fermeture des Catacombes (nov. 2025)](https://www.franceinfo.fr/culture/patrimoine/histoire/pas-prevues-pour-accueillir-600-000-visiteurs-par-an-les-catacombes-de-paris-ferment-leurs-portes-lundi-pour-cinq-mois-de-travaux_7588937.html) | Article confirme « 600 000 visiteurs par an » à la veille de la fermeture du 3 novembre 2025 — ordre de grandeur, pas le réalisé exact 2025. |
