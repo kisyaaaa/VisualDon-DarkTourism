@@ -100,6 +100,70 @@ const maxVisitors = Math.max(
   ...sitesData.flatMap(s => Object.values(s.visits))
 );
 
+// ── Per-site descriptive paragraphs (shown in the side panel when zoomed) ──
+const siteDescriptions = {
+  "Pompeii": {
+    title: "Pompeii (Italy)",
+    text: "Pompeii has moved from promotion to flow management. With uninterrupted growth exceeding 4 million visitors in 2024, the site has become a victim of its own success. The recent evolution (2024–2025) marks a strategic shift: to protect the ruins, the administration had to implement quotas and named tickets, artificially stabilizing attendance while increasing the quality of the visitor experience."
+  },
+  "Auschwitz": {
+    title: "Auschwitz-Birkenau (Poland)",
+    text: "The memorial reflects European geopolitical tensions. After reaching a peak in 2019, the post-COVID recovery in 2022 was slower than expected due to the proximity of the war in Ukraine, which discouraged some international school groups. Nevertheless, the site's educational significance regained its momentum in 2024–2025, bringing attendance back to its record level of 2.4 million people."
+  },
+  "Chernobyl": {
+    title: "Chernobyl (Ukraine)",
+    text: "This is the most unstable trajectory. Propelled by the HBO series in 2019 (124,000 visits), the site subsequently suffered through COVID and then the Russian invasion in 2022, which halted all activity. Since 2024, we have observed a very fragile reopening, limited to specific missions. We are far from the excitement of 2019; the site has reverted from a “trendy” tourist zone back to a high-security military area."
+  },
+  "Ground Zero": {
+    title: "9/11 Memorial (United States)",
+    text: "Ground Zero embodies New York City's resilience. After a total paralysis during the pandemic, the memorial was initially supported by American domestic tourism in 2022. The massive return of international travelers in 2023 and 2024 allowed the site to cross the 3-million-visitor mark once again, confirming its place as an essential global sanctuary in the heart of Manhattan."
+  },
+  "Paris Catacombs": {
+    title: "Paris Catacombs",
+    text: "The attendance analysis for the Paris Catacombs reveals a site now operating at its structural maximum capacity. While verifiable official data is missing for the beginning of the period (2015–2017) and the years impacted by the pandemic (2020–2022), available figures show solid growth: from 550,000 visitors in 2018 to a peak of 601,900 in 2019. The post-pandemic recovery confirms this saturation, with attendance stabilizing at 607,730 visitors in 2023 and 2024, appearing to be the technical ceiling permitted by strict safety regulations. The year 2025 marks a significant logistical shift: although the general volume remains around 600,000 visitors, the site closed on November 3, 2025, for major renovations, mechanically limiting the final year-end count while preparing to modernize visitor reception for the coming decades."
+  },
+  "Fukushima": {
+    title: "Fukushima (Japan)",
+    text: "Fukushima's evolution is one of transition from exclusion to education. Between 2015 and 2016, visitor numbers were nearly zero as the areas were strictly prohibited. The turning point occurred in 2017 with the first partial reopenings, followed by a true explosion starting in 2022. The creation of the “Hope Tourism” concept and the opening of symbolic sites (such as the Ukedo Elementary School and the Futaba Memorial) transformed a disaster-stricken area into a global hub for learning about resilience, reaching a record of over 500,000 visitors by 2025."
+  },
+  "Syria": {
+    title: "Syria",
+    text: "Syria presents a curve of brand image reconstruction. Initially limited to religious pilgrims in 2015, attendance surged as early as 2017 following the securing of Aleppo. Despite the abrupt halt caused by COVID-19, the country experienced spectacular growth from 2022 to 2025 (+80% increase in foreign tourists). The country now capitalizes on the contrast between its ancient ruins (Palmyra) and its war ruins to attract a new international audience seeking adventure."
+  },
+  "Human Safari": {
+    title: "Sarajevo “Human Safari” (Bosnia and Herzegovina)",
+    text: "In this case, the evolution is not tourist-driven but judicial and media-related. Long regarded as an urban legend or a war rumor (2015–2021), the subject transitioned into public reality in 2022 with the release of Miran Zupanič's documentary. Since then, the figures do not represent “visitors” but rather suspects identified by international investigations (notably in Milan). By 2025, the legal instruction allowed for a quantification of the phenomenon, with an estimated 230 foreign participants involved."
+  },
+  "Capuchins": {
+    title: "Capuchin Catacombs (Italy)",
+    text: "This site follows the health of the Mediterranean cruise market. After stable growth until 2019, the site suffered from strict sanitary quotas. However, the allure of Rosalia Lombardo's mummy and the global tourism boom in Palermo (Cultural Capital) propelled visitor numbers toward historical records in 2024 and 2025, exceeding 380,000 annual visitors."
+  }
+};
+
+const sitePanelEl = document.getElementById("site-description-panel");
+const sitePanelTitleEl = document.getElementById("site-description-title");
+const sitePanelTextEl = document.getElementById("site-description-text");
+
+function showSitePanel(site) {
+  if (!sitePanelEl) return;
+  const info = siteDescriptions[site.name];
+  if (!info) {
+    hideSitePanel();
+    return;
+  }
+  sitePanelTitleEl.textContent = info.title;
+  sitePanelTextEl.textContent = info.text;
+  sitePanelEl.style.setProperty("--site-color", site.color);
+  sitePanelEl.setAttribute("aria-hidden", "false");
+  sitePanelEl.classList.add("visible");
+}
+
+function hideSitePanel() {
+  if (!sitePanelEl) return;
+  sitePanelEl.classList.remove("visible");
+  sitePanelEl.setAttribute("aria-hidden", "true");
+}
+
 function formatVisits(thousands) {
   if (thousands >= 1000) return (thousands / 1000).toFixed(1) + "M";
   return thousands + "K";
@@ -186,6 +250,7 @@ svg.on("click", () => {
   currentZoomed = null;
   zoomSession++;
   hideColumns();
+  hideSitePanel();
   svg.transition().duration(900).call(zoomBehavior.transform, d3.zoomIdentity);
 });
 
@@ -195,10 +260,12 @@ function handleClick(event, d) {
     currentZoomed = null;
     zoomSession++;
     hideColumns();
+    hideSitePanel();
     svg.transition().duration(900).call(zoomBehavior.transform, d3.zoomIdentity);
     return;
   }
   hideColumns();
+  hideSitePanel();
   currentZoomed = d.name;
   zoomSession++;
   const mySession = zoomSession;
@@ -214,7 +281,10 @@ function handleClick(event, d) {
       .translate(-d.x, -d.y)
   );
   setTimeout(() => {
-    if (mySession === zoomSession && currentZoomed === d.name) showColumns(d);
+    if (mySession === zoomSession && currentZoomed === d.name) {
+      showColumns(d);
+      showSitePanel(d);
+    }
   }, 900);
 }
 
@@ -235,7 +305,7 @@ function showColumns(site) {
   hideColumns();
 
   // Columns emerge from the site's actual screen position after zoom
-  const cx0 = pX(site);
+  const cx0 = pX(site)-180;
   const cy0 = pY(site);
 
   // Lift the chart's ground line well ABOVE the dot so the marker sits
