@@ -255,3 +255,21 @@
   | **2023** | 2 800 000 | [911 Memorial](https://www.911memorial.org/) | Reprise massive du tourisme international. |
   | **2024** | 3 150 000 | [911 Memorial](https://www.911memorial.org/) | Quasi-retour au niveau de 2019. |
   | **2025** | **~3 400 000** | [Report 2025](https://www.911memorial.org/2025-annual-report) | Nouveau record estimé. |
+
+  ---
+
+  ### 9. Catacombes de Paris
+
+  | Année | Visiteurs | Source / Lien | Commentaire |
+  | :--- | :--- | :--- | :--- |
+  | **2015** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2015. |
+  | **2016** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2016. |
+  | **2017** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2017. |
+  | **2018** | 550 000 | [Catacombes de Paris](https://catacombes.paris.fr/) — informations pratiques + PDF du conseil d'arrondissement 14e | Le site officiel indique « près de 550 000 visiteurs par an » et un document municipal de 2018 mentionne 550 000 visiteurs annuels. |
+  | **2019** | 601 900 | [Paris Musées / Assises du tourisme durable](https://events.parisinfo.com/) | Chiffre visible dans un tableau de fréquentation culturelle à Paris : Catacombes de Paris, 601 900. |
+  | **2020** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2020. |
+  | **2021** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2021. |
+  | **2022** | N/D | Aucune source officielle visible avec chiffre annuel vérifiable. | Pas de chiffre annuel officiel trouvé pour 2022. |
+  | **2023** | 607 730 | [Ville de Paris — fréquentation 2024](https://www.paris.fr/) | La Ville de Paris indique 607 730 visiteurs en 2024, « stable par rapport à 2023 ». |
+  | **2024** | 607 730 | [Ville de Paris — fréquentation 2024](https://www.paris.fr/) | Chiffre officiel publié par la Ville de Paris. |
+  | **2025** | **~600 000** | [Communiqué Catacombes 2025 PDF](https://catacombes.paris.fr/) + [Paris.fr — fréquentation 2025](https://www.paris.fr/) | Le communiqué officiel parle de « 600 000 visiteurs chaque année », mais les Catacombes ont été fermées à partir du 3 novembre 2025 pour travaux : ce chiffre est un ordre de grandeur, pas le réalisé exact 2025. |
