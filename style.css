@@ -70,6 +70,7 @@ body {
   justify-content: center;
   text-align: center;
   background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 70%);
+  position: relative;
 }
 
 .hero-title {
@@ -77,8 +78,21 @@ body {
   font-weight: 300;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
   color: #e0e0e0;
+}
+
+.hero-intro {
+  max-width: 720px;
+  margin: 0 auto 2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #c8c8c8;
+  font-weight: 300;
+}
+
+.hero-intro:last-of-type {
+  margin-bottom: 0;
 }
 
 .scroll-cta {
@@ -86,13 +100,22 @@ body {
   letter-spacing: 0.4em;
   text-transform: uppercase;
   color: #888;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1rem;
+  position: absolute;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
 }
 
 .scroll-arrow {
   font-size: 1.5rem;
   color: #888;
   animation: bounce 2s infinite;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 @keyframes bounce {
