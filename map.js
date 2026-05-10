@@ -27,7 +27,7 @@ const chapters = {
   "chapter-pompeii": {
     center: [14.492867, 40.749394], zoom: 6, pitch: 50, bearing: 30,
     duration: 10000, color: "#e67e22",
-    iframeHTML: "https://maps.google.com/maps?layer=c&cbll=40.749394,14.492867&cbp=12,0,,0,0&output=svembed"
+    iframeHTML: `<iframe src="https://www.google.com/maps/embed?pb=!4v1778436748014!6m8!1m7!1sCAoSFkNJSE0wb2dLRUlDQWdJQzAxWk9tUGc.!2m2!1d40.74945714041607!2d14.49330767805895!3f246.0448309515166!4f-10.932340411703464!5f0.7820865974627469" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`
   },
   "chapter-groundzero": {
     center: [-74.013218, 40.711565], zoom: 6, pitch: 50, bearing: -20,
