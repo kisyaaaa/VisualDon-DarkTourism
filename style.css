@@ -310,6 +310,29 @@ body {
   font-weight: 400;
 }
 
+/* ── Opening question: extra-large headline on the radial dark background ── */
+.intro-question .step-content {
+  background: transparent;
+  padding: 2rem 2.5rem;
+  max-width: 1100px;
+}
+
+.intro-question h2 {
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  color: #f0f0f0;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85);
+}
+
+@media (max-width: 720px) {
+  .intro-question h2 {
+    font-size: clamp(2rem, 9vw, 3rem);
+    letter-spacing: 0.02em;
+  }
+}
+
 /* ── Map scrollytelling ── */
 #map-story {
   position: relative;
