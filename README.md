@@ -1,5 +1,7 @@
   # VisualDon — Dark Tourism
 
+  Site web déployé : https://dark-tourism.netlify.app/
+
   Projet de visualisation de données autour du *dark tourism* : visiter des lieux marqués
   par la mort, la catastrophe ou la souffrance. Où s'arrête le devoir de mémoire,
   où commence le voyeurisme ? C'est la question que ce projet pose au visiteur.
